@@ -1,0 +1,743 @@
+{
+  "Version": 1,
+  "Hash": "jtHJPGTOnXIUmcypIzNF6mix7w2HYch3Z/NmkJ32YOA=",
+  "Source": "RentAutoWeb",
+  "BasePath": "_content/RentAutoWeb",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "RentAutoWeb\\wwwroot",
+      "Source": "RentAutoWeb",
+      "ContentRoot": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\",
+      "BasePath": "_content/RentAutoWeb",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\CSS\\Index.css",
+      "SourceId": "RentAutoWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\",
+      "BasePath": "_content/RentAutoWeb",
+      "RelativePath": "CSS/Index#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "fh3pxon2ce",
+      "Integrity": "HRHmHoYwvDD21t2jSczRykGy6dguG55xnoCX2LJxTNI=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\CSS\\Index.css"
+    },
+    {
+      "Identity": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\CSS\\Login.css",
+      "SourceId": "RentAutoWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\",
+      "BasePath": "_content/RentAutoWeb",
+      "RelativePath": "CSS/Login#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6cdy4t8yrd",
+      "Integrity": "+m+A9Xi+6pSELK5nreCTALyWuIzdFgEACIoyFxJdhn0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\CSS\\Login.css"
+    },
+    {
+      "Identity": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\CSS\\Registration.css",
+      "SourceId": "RentAutoWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\",
+      "BasePath": "_content/RentAutoWeb",
+      "RelativePath": "CSS/Registration#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "y52t1cl092",
+      "Integrity": "NlGbpKotfoshI00tLumD6myZR69CuJtOiU+Gxz0M+Do=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\CSS\\Registration.css"
+    },
+    {
+      "Identity": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\JS\\Index.js",
+      "SourceId": "RentAutoWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\",
+      "BasePath": "_content/RentAutoWeb",
+      "RelativePath": "JS/Index#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "qfjhzb8o0k",
+      "Integrity": "WvT+1lB9PHbI20UNh25Tfn5csZns9S3ZhyO7qTlAKmM=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\JS\\Index.js"
+    },
+    {
+      "Identity": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\JS\\Modal.js",
+      "SourceId": "RentAutoWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\",
+      "BasePath": "_content/RentAutoWeb",
+      "RelativePath": "JS/Modal#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "zwl89vch5x",
+      "Integrity": "86UmQ4TziJYxP+JG5dge1OHZpTuooWDvPfwsfmLD28g=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\JS\\Modal.js"
+    },
+    {
+      "Identity": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\JS\\Registration.js",
+      "SourceId": "RentAutoWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\",
+      "BasePath": "_content/RentAutoWeb",
+      "RelativePath": "JS/Registration#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "4s39rfsmtg",
+      "Integrity": "nK2JWlYZaMSbmnjtCO5bbypWPF0CrSnm79f2IL2mwY0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\JS\\Registration.js"
+    },
+    {
+      "Identity": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\MEDIA\\Logo.png",
+      "SourceId": "RentAutoWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\",
+      "BasePath": "_content/RentAutoWeb",
+      "RelativePath": "MEDIA/Logo#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "sh1ndjoymz",
+      "Integrity": "UMDXgehKkXN8hetU+2CBX3LHAzJdXPWibpoUhJkynQg=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\MEDIA\\Logo.png"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "CSS/Index.css",
+      "AssetFile": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\CSS\\Index.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4370"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HRHmHoYwvDD21t2jSczRykGy6dguG55xnoCX2LJxTNI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 05 Mar 2025 14:07:49 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-HRHmHoYwvDD21t2jSczRykGy6dguG55xnoCX2LJxTNI="
+        }
+      ]
+    },
+    {
+      "Route": "CSS/Index.fh3pxon2ce.css",
+      "AssetFile": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\CSS\\Index.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4370"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HRHmHoYwvDD21t2jSczRykGy6dguG55xnoCX2LJxTNI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 05 Mar 2025 14:07:49 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "fh3pxon2ce"
+        },
+        {
+          "Name": "label",
+          "Value": "CSS/Index.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-HRHmHoYwvDD21t2jSczRykGy6dguG55xnoCX2LJxTNI="
+        }
+      ]
+    },
+    {
+      "Route": "CSS/Login.6cdy4t8yrd.css",
+      "AssetFile": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\CSS\\Login.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4057"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"+m+A9Xi+6pSELK5nreCTALyWuIzdFgEACIoyFxJdhn0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 04 Mar 2025 11:04:02 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6cdy4t8yrd"
+        },
+        {
+          "Name": "label",
+          "Value": "CSS/Login.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-+m+A9Xi+6pSELK5nreCTALyWuIzdFgEACIoyFxJdhn0="
+        }
+      ]
+    },
+    {
+      "Route": "CSS/Login.css",
+      "AssetFile": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\CSS\\Login.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4057"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"+m+A9Xi+6pSELK5nreCTALyWuIzdFgEACIoyFxJdhn0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 04 Mar 2025 11:04:02 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-+m+A9Xi+6pSELK5nreCTALyWuIzdFgEACIoyFxJdhn0="
+        }
+      ]
+    },
+    {
+      "Route": "CSS/Registration.css",
+      "AssetFile": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\CSS\\Registration.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1529"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"NlGbpKotfoshI00tLumD6myZR69CuJtOiU+Gxz0M+Do=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 13:37:24 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-NlGbpKotfoshI00tLumD6myZR69CuJtOiU+Gxz0M+Do="
+        }
+      ]
+    },
+    {
+      "Route": "CSS/Registration.y52t1cl092.css",
+      "AssetFile": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\CSS\\Registration.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1529"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"NlGbpKotfoshI00tLumD6myZR69CuJtOiU+Gxz0M+Do=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 13:37:24 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "y52t1cl092"
+        },
+        {
+          "Name": "label",
+          "Value": "CSS/Registration.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-NlGbpKotfoshI00tLumD6myZR69CuJtOiU+Gxz0M+Do="
+        }
+      ]
+    },
+    {
+      "Route": "JS/Index.js",
+      "AssetFile": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\JS\\Index.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "473"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WvT+1lB9PHbI20UNh25Tfn5csZns9S3ZhyO7qTlAKmM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 15:57:44 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-WvT+1lB9PHbI20UNh25Tfn5csZns9S3ZhyO7qTlAKmM="
+        }
+      ]
+    },
+    {
+      "Route": "JS/Index.qfjhzb8o0k.js",
+      "AssetFile": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\JS\\Index.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "473"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WvT+1lB9PHbI20UNh25Tfn5csZns9S3ZhyO7qTlAKmM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 15:57:44 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "qfjhzb8o0k"
+        },
+        {
+          "Name": "label",
+          "Value": "JS/Index.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-WvT+1lB9PHbI20UNh25Tfn5csZns9S3ZhyO7qTlAKmM="
+        }
+      ]
+    },
+    {
+      "Route": "JS/Modal.js",
+      "AssetFile": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\JS\\Modal.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "894"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"86UmQ4TziJYxP+JG5dge1OHZpTuooWDvPfwsfmLD28g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 15:57:47 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-86UmQ4TziJYxP+JG5dge1OHZpTuooWDvPfwsfmLD28g="
+        }
+      ]
+    },
+    {
+      "Route": "JS/Modal.zwl89vch5x.js",
+      "AssetFile": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\JS\\Modal.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "894"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"86UmQ4TziJYxP+JG5dge1OHZpTuooWDvPfwsfmLD28g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 15:57:47 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "zwl89vch5x"
+        },
+        {
+          "Name": "label",
+          "Value": "JS/Modal.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-86UmQ4TziJYxP+JG5dge1OHZpTuooWDvPfwsfmLD28g="
+        }
+      ]
+    },
+    {
+      "Route": "JS/Registration.4s39rfsmtg.js",
+      "AssetFile": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\JS\\Registration.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7552"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"nK2JWlYZaMSbmnjtCO5bbypWPF0CrSnm79f2IL2mwY0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 16:28:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "4s39rfsmtg"
+        },
+        {
+          "Name": "label",
+          "Value": "JS/Registration.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-nK2JWlYZaMSbmnjtCO5bbypWPF0CrSnm79f2IL2mwY0="
+        }
+      ]
+    },
+    {
+      "Route": "JS/Registration.js",
+      "AssetFile": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\JS\\Registration.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7552"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"nK2JWlYZaMSbmnjtCO5bbypWPF0CrSnm79f2IL2mwY0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 16:28:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-nK2JWlYZaMSbmnjtCO5bbypWPF0CrSnm79f2IL2mwY0="
+        }
+      ]
+    },
+    {
+      "Route": "MEDIA/Logo.png",
+      "AssetFile": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\MEDIA\\Logo.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "268593"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"UMDXgehKkXN8hetU+2CBX3LHAzJdXPWibpoUhJkynQg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 04 Mar 2025 07:57:39 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-UMDXgehKkXN8hetU+2CBX3LHAzJdXPWibpoUhJkynQg="
+        }
+      ]
+    },
+    {
+      "Route": "MEDIA/Logo.sh1ndjoymz.png",
+      "AssetFile": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\MEDIA\\Logo.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "268593"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"UMDXgehKkXN8hetU+2CBX3LHAzJdXPWibpoUhJkynQg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 04 Mar 2025 07:57:39 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "sh1ndjoymz"
+        },
+        {
+          "Name": "label",
+          "Value": "MEDIA/Logo.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-UMDXgehKkXN8hetU+2CBX3LHAzJdXPWibpoUhJkynQg="
+        }
+      ]
+    }
+  ]
+}

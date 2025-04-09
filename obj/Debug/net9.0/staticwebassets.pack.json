@@ -1,0 +1,53 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\CSS\\Index.css",
+      "PackagePath": "staticwebassets\\CSS\\Index.css"
+    },
+    {
+      "Id": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\CSS\\Login.css",
+      "PackagePath": "staticwebassets\\CSS\\Login.css"
+    },
+    {
+      "Id": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\CSS\\Registration.css",
+      "PackagePath": "staticwebassets\\CSS\\Registration.css"
+    },
+    {
+      "Id": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\JS\\Index.js",
+      "PackagePath": "staticwebassets\\JS\\Index.js"
+    },
+    {
+      "Id": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\JS\\Modal.js",
+      "PackagePath": "staticwebassets\\JS\\Modal.js"
+    },
+    {
+      "Id": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\JS\\Registration.js",
+      "PackagePath": "staticwebassets\\JS\\Registration.js"
+    },
+    {
+      "Id": "C:\\Users\\Вадим\\Desktop\\Diplom\\RentAutoWeb\\wwwroot\\MEDIA\\Logo.png",
+      "PackagePath": "staticwebassets\\MEDIA\\Logo.png"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.RentAutoWeb.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.RentAutoWeb.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.build.RentAutoWeb.props",
+      "PackagePath": "build\\RentAutoWeb.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildMultiTargeting.RentAutoWeb.props",
+      "PackagePath": "buildMultiTargeting\\RentAutoWeb.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildTransitive.RentAutoWeb.props",
+      "PackagePath": "buildTransitive\\RentAutoWeb.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

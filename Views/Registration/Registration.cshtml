@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RentAuto</title>
+    <link rel="stylesheet" href="/CSS/Index.css">
+    <link rel="stylesheet" href="/CSS/Registration.css">
+    <link rel="stylesheet" href="/CSS/Login.css">
+</head>
+
+
+<body>
+    <Header>
+        <nav class="ContainerNavigation">
+            <div class="logo">
+                <img src="/MEDIA/Logo.png" alt="Логотип RentAuto">
+            </div>
+            <button class="hamburger" id="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </button>
+            <ul class="navigation-menu">
+                <li><a asp-controller="Home" asp-action="Index">Главная</a></li>
+                <li><a asp-controller="Home" asp-action="Auto">Автомобили</a></li>
+                <li class="active"><a asp-controller="Registration" asp-action="Registration">Регистрация</a></li>
+                <li><a asp-controller="Home" asp-action="About">О нас</a></li>
+            </ul>
+
+    </Header>
+    <div class="container">
+        <h2>Регистрация</h2>
+        <div class="progress-bar">
+            <div class="progress-bar-fill" id="progress-bar-fill"></div>
+        </div>
+        <form id="registration-form">
+            <div id="step-1">
+                <div class="form-group">
+                    <label for="email">Почта:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Фамилия:</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="firstName">Имя:</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="middleName">Отчество:</label>
+                    <input type="text" id="middleName" name="middleName">
+                </div>
+                 <div class="form-group">
+                    <label for="phone">Номер телефона:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Подтверждение пароля:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <button type="button" id="next-step-1" class="button">Продолжить</button>
+            </div>
+
+            <div id="step-2" style="display: none;">
+                <div class="form-group">
+                    <label for="passportData">Паспортные данные:</label>
+                    <input type="text" id="passportData" name="passportData" required>
+                </div>
+                <div class="form-group">
+                    <label for="driverLicense">Данные ВУ:</label>
+                    <input type="text" id="driverLicense" name="driverLicense" required>
+                </div>
+                <button type="button" id="next-step-2" class="button">Продолжить</button>
+                <button type="button" id="prev-step-1" class="button">Назад</button>
+            </div>
+
+            <div id="step-3" style="display: none;">
+                <div class="form-group">
+                    <label for="passportPhoto">Фото паспорта:</label>
+                    <input type="file" id="passportPhoto" name="passportPhoto" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <label for="driverLicensePhoto">Фото ВУ:</label>
+                    <input type="file" id="driverLicensePhoto" name="driverLicensePhoto" accept="image/*" required>
+                </div>
+                <button type="button" id="prev-step-2" class="button">Назад</button>
+                <button type="submit" class="button">Зарегистрироваться</button>
+            </div>
+        </form>
+    </div>
+    <script src="/JS/Registration.js"></script>
+    <script src="/JS/Index.js"></script>
+
+
+</body>
+</html>
