@@ -29,7 +29,7 @@ namespace RentAutoWeb.Controllers
         {
             _logger.LogInformation("Начало Login"); // Добавляем логирование
             try
-        Ё    {
+            {
                 if (ModelState.IsValid)
                 {
                     var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
