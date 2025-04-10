@@ -18,7 +18,11 @@
                 <li class="active"><a asp-controller="Home" asp-action="Auto">Автомобили</a></li>
                 <li><a asp-controller="Home" asp-action="About">О нас</a></li>
             </ul>
-            <button id="open-modal" class="button">Войти</button>
+            <div class="user-actions">
+                <div id="user-name"></div>
+                <button id="open-modal" class="button">Войти</button>
+                <button id="logout-button" class="button" style="display: none;">Выйти</button>
+            </div>
 
         </nav>
     </Header>
@@ -27,10 +31,10 @@
         <div class="modal-content">
             <span class="close-modal" id="close-modal">&times;</span>
             <h2>Вход в аккаунт</h2>
-            <form>
+            <form id="login-form">
                 <div class="form-group">
-                    <label for="login">Логин:</label>
-                    <input type="text" id="login" name="login" required>
+                    <label for="login">Email:</label>
+                    <input type="email" id="login" name="login" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Пароль:</label>
@@ -38,9 +42,11 @@
                 </div>
                 <button class="modal-button" type="submit">Войти</button>
             </form>
+            <div id="login-error-messages"></div>
             <p>Нет аккаунта? <a asp-controller="Registration" asp-action="Registration" id="registration-modal">Зарегистрироваться</a></p>
         </div>
     </div>
+
 
     <script src="/JS/Index.js"></script>
     <script src="/JS/Modal.js"></script>

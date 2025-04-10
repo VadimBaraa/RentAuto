@@ -28,11 +28,6 @@ namespace RentAutoWeb.Controllers
             return View(); // Возвращает представление "About.cshtml" из папки "Home"
         }
 
-        [HttpPost]
-        public IActionResult Login(string login, string password)
-        {
-            // Тут будет логика обработки данных формы
-            return View();
-        }
+        
     }
 }

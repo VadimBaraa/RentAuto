@@ -8,7 +8,7 @@ using System.IO;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging; // Добавляем using
 
 namespace RentAutoWeb.Controllers
 {
@@ -42,7 +42,7 @@ namespace RentAutoWeb.Controllers
                 if (!ModelState.IsValid)
                 {
                     _logger.LogWarning("Ошибка валидации в RegistrationStep1");
-                    return ValidationProblem(ModelState);
+                    return BadRequest(ModelState); // Возвращаем ошибки
                 }
                 HttpContext.Session.SetString("RegisterStep1", JsonSerializer.Serialize(model));
                 _logger.LogInformation("Успешное завершение RegistrationStep1");
@@ -64,7 +64,7 @@ namespace RentAutoWeb.Controllers
                 if (!ModelState.IsValid)
                 {
                     _logger.LogWarning("Ошибка валидации в RegistrationStep2");
-                    return ValidationProblem(ModelState);
+                    return BadRequest(ModelState); // Возвращаем ошибки
                 }
 
                 var step1DataJson = HttpContext.Session.GetString("RegisterStep1");
@@ -115,7 +115,7 @@ namespace RentAutoWeb.Controllers
                     MiddleName = step1Model.MiddleName,
                     Email = step1Model.Email,
                     PhoneNumber = step1Model.Phone,
-                    UserName = step1Model.Email 
+                    UserName = step1Model.Email
                 };
 
                 // Используем UserManager для создания пользователя и хеширования пароля
