@@ -1,3 +1,7 @@
+@{
+    var userName = Context.Session.GetString("UserName");
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +25,10 @@
             <div class="user-actions">
                 @if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
-                    <span id="user-name">Привет, @User.Identity.Name</span>
+                    @if (!string.IsNullOrEmpty(userName))
+                    {
+                        <span>@userName</span>
+                    }
                     <form method="post" action="/Login/Logout" style="display:inline">
                         <button type="submit" class="modal-button button">Выйти</button>
                     </form>
@@ -55,6 +62,33 @@
             <p>Нет аккаунта? <a asp-controller="Registration" asp-action="Registration" id="registration-modal">Зарегистрироваться</a></p>
         </div>
     </div>
+    
+    @{
+    ViewBag.Title = "Карта авто";
+}
+
+<h2 style="text-align: center; color: #f5e2dc;">Карта доступных машин</h2>
+    <div id="map" style="width: 90%; height: 650px; padding-left: 5%;"></div>
+
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=4afd91b5-d358-4b9e-906c-0e7c70177a95&lang=ru_RU" type="text/javascript"></script>
+    <script>
+        ymaps.ready(function () {
+            var map = new ymaps.Map("map", {
+                center: [55.751244, 37.618423],
+                zoom: 12
+            });
+
+            // Машина 1
+            map.geoObjects.add(new ymaps.Placemark([55.76, 37.64], {
+                balloonContent: 'Hyundai Solaris — свободен'
+            }));
+
+            // Машина 2
+            map.geoObjects.add(new ymaps.Placemark([55.75, 37.62], {
+                balloonContent: 'Renault Logan — занят'
+            }));
+        });
+    </script>
 
     <div>
         @if (Model != null)

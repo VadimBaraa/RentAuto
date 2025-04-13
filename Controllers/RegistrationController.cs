@@ -118,7 +118,6 @@ namespace RentAutoWeb.Controllers
                     MiddleName = step1Model.MiddleName,
                     Email = step1Model.Email,
                     PhoneNumber = step1Model.Phone,
-                    UserName = step1Model.Email
                 };
 
                 // Используем UserManager для создания пользователя и хеширования пароля

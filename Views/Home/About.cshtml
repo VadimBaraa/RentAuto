@@ -1,3 +1,7 @@
+@{
+    var userName = Context.Session.GetString("UserName");
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +25,10 @@
             <div class="user-actions">
                 @if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
-                    <span id="user-name">Привет, @User.Identity.Name</span>
+                    @if (!string.IsNullOrEmpty(userName))
+                    {
+                        <span>@userName</span>
+                    }
                     <form method="post" action="/Login/Logout" style="display:inline">
                         <button type="submit" class="modal-button button">Выйти</button>
                     </form>

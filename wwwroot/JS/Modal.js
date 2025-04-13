@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (storedUserName) {
         loginButton.style.display = 'none';
         logoutButton.style.display = 'block';
-        userName.textContent = `Привет, ${storedUserName}`;
+        userName.textContent = `${storedUserName}`;
         userName.style.display = 'inline';
     }
 
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     loginModal.style.display = 'none';
 
                     // Отображаем имя пользователя
-                    userName.textContent = `Привет, ${data.userName}`;
+                    userName.textContent = `${data.userName}`;
                     userName.style.display = 'inline';
 
                     // Переключаем кнопки
