@@ -18,11 +18,14 @@ namespace RentAutoWeb.Controllers
         private readonly UserManager<User> _userManager; // Внедряем UserManager
         private readonly ILogger<RegistrationController> _logger;
 
+        private readonly SignInManager<User> _signInManager;
+
         // Изменяем конструктор
-        public RegistrationController(AppDbContext context, UserManager<User> userManager, ILogger<RegistrationController> logger)
+        public RegistrationController(AppDbContext context, UserManager<User> userManager, SignInManager<User> signInManager, ILogger<RegistrationController> logger)
         {
             _context = context;
-            _userManager = userManager; // Инициализируем UserManager
+            _userManager = userManager;
+            _signInManager = signInManager;
             _logger = logger;
         }
 
@@ -123,14 +126,14 @@ namespace RentAutoWeb.Controllers
 
                 if (!result.Succeeded)
                 {
-                    // Обработка ошибок создания пользователя
                     foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
-                    return BadRequest(ModelState); // Возвращаем ошибки
+                    return BadRequest(ModelState);
                 }
 
+                // Сохраняем расширенную информацию
                 UserAdditionalInfo userAdditionalInfo = new UserAdditionalInfo
                 {
                     PassportData = step2Model.PassportData,
@@ -159,12 +162,22 @@ namespace RentAutoWeb.Controllers
                     }
                     userAdditionalInfo.DriverLicensePhotoPath = "/uploads/" + driverLicenseFileName;
                 }
+                // Сохраняем в БД
                 _context.UserAdditionalInfos.Add(userAdditionalInfo);
                 await _context.SaveChangesAsync();
 
-                HttpContext.Session.Clear();
-                _logger.LogInformation("Успешное завершение RegistrationStep3");
-                return Ok(new { message = "Регистрация завершена" });
+                // Авторизуем пользователя
+                await _signInManager.SignInAsync(newUser, isPersistent: false);
+
+                // Сохраняем имя в сессию
+                HttpContext.Session.SetString("UserName", newUser.FirstName);
+
+                // Очищаем временные данные регистрации
+                HttpContext.Session.Remove("RegisterStep1");
+                HttpContext.Session.Remove("RegisterStep2");
+
+                // Редирект на главную
+                return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)
             {

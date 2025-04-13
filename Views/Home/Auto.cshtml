@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/CSS/Login.css">
 </head>
 <body>
-    <Header>
+    <header>
         <nav class="ContainerNavigation">
             <div class="logo">
                 <img src="/MEDIA/Logo.png" alt="Логотип RentAuto">
@@ -19,13 +19,22 @@
                 <li><a asp-controller="Home" asp-action="About">О нас</a></li>
             </ul>
             <div class="user-actions">
-                <div id="user-name"></div>
-                <button id="open-modal" class="button">Войти</button>
-                <button id="logout-button" class="button" style="display: none;">Выйти</button>
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <span id="user-name">Привет, @User.Identity.Name</span>
+                    <form method="post" action="/Login/Logout" style="display:inline">
+                        <button type="submit" class="modal-button button">Выйти</button>
+                    </form>
+                }
+                else
+                {
+                    <span id="user-name" style="display:none"></span>
+                    <button id="loginButton" class="modal-button button">Войти</button>
+                    <button id="logoutButton" class="modal-button button" style="display:none">Выйти</button>
+                }
             </div>
-
         </nav>
-    </Header>
+    </header>
 
     <div class="modal" id="login-modal">
         <div class="modal-content">
@@ -47,6 +56,19 @@
         </div>
     </div>
 
+    <div>
+        @if (Model != null)
+        {
+            foreach (var car in Model)
+            {
+                <p>@car.Brand - @car.Model</p>
+            }
+        }
+        else
+        {
+            <p>Нет доступных автомобилей.</p>
+        }
+    </div>
 
     <script src="/JS/Index.js"></script>
     <script src="/JS/Modal.js"></script>

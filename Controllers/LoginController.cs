@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
+using RentAutoWeb.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using RentAutoWeb.Models;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging; // Добавляем using
 
 namespace RentAutoWeb.Controllers
 {
@@ -13,21 +14,21 @@ namespace RentAutoWeb.Controllers
     {
         private readonly AppDbContext _context;
         private readonly SignInManager<User> _signInManager;
-        private readonly ILogger<LoginController> _logger; // Добавляем ILogger
+        private readonly ILogger<LoginController> _logger;
 
-        // Изменяем конструктор
-        public LoginController(AppDbContext context, SignInManager<User> signInManager, ILogger<LoginController> logger) // Добавляем ILogger
+        public LoginController(AppDbContext context, SignInManager<User> signInManager, ILogger<LoginController> logger)
         {
             _context = context;
             _signInManager = signInManager;
-            _logger = logger; // Инициализируем ILogger
+            _logger = logger;
         }
 
         [HttpPost]
         [Route("/Login/Login")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
-            _logger.LogInformation("Начало Login"); // Добавляем логирование
+            _logger.LogInformation("Начало Login");
+
             try
             {
                 if (ModelState.IsValid)
@@ -36,27 +37,28 @@ namespace RentAutoWeb.Controllers
 
                     if (user != null)
                     {
-                        // Используем SignInManager для проверки пароля
                         var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
 
                         if (result.Succeeded)
                         {
-                            // Пользователь найден и пароль верный
                             HttpContext.Session.SetString("UserId", user.Id.ToString());
-                            _logger.LogInformation("Успешный вход"); // Добавляем логирование
+                            HttpContext.Session.SetString("UserName", user.FirstName);
+                            _logger.LogInformation("Успешный вход");
                             return Json(new { message = "Вход выполнен успешно!", userName = user.FirstName });
                         }
                     }
 
-                    // Пользователь не найден или пароль неверный
+                    // Ошибка авторизации
                     var errorResponse = new ErrorResponse();
                     errorResponse.Errors.Add("Login", new List<string> { "Неверный email или пароль" });
-                    _logger.LogWarning("Неверный email или пароль"); // Добавляем логирование
+                    _logger.LogWarning("Неверный email или пароль");
                     return BadRequest(errorResponse);
                 }
                 else
                 {
+                    // Ошибки валидации модели
                     var errorResponse = new ErrorResponse();
+
                     foreach (var modelStateKey in ModelState.Keys)
                     {
                         var modelStateVal = ModelState[modelStateKey];
@@ -66,17 +68,23 @@ namespace RentAutoWeb.Controllers
                             {
                                 errorResponse.Errors[modelStateKey] = new List<string>();
                             }
+
                             errorResponse.Errors[modelStateKey].Add(error.ErrorMessage);
                         }
                     }
-                    _logger.LogWarning("Ошибка валидации"); // Добавляем логирование
+
+                    _logger.LogWarning("Ошибка валидации модели");
                     return BadRequest(errorResponse);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Ошибка в Login: {ex.Message}"); // Добавляем логирование
-                return BadRequest(ex.Message);
+                _logger.LogError($"Ошибка в Login: {ex.Message}");
+
+                var errorResponse = new ErrorResponse();
+                errorResponse.Errors.Add("Server", new List<string> { "Произошла ошибка на сервере. Попробуйте позже." });
+
+                return BadRequest(errorResponse);
             }
         }
 
@@ -84,19 +92,43 @@ namespace RentAutoWeb.Controllers
         [Route("/Login/Logout")]
         public async Task<IActionResult> Logout()
         {
-            _logger.LogInformation("Начало Logout"); // Добавляем логирование
+            _logger.LogInformation("Начало Logout");
+
             try
             {
-                await _signInManager.SignOutAsync(); // Используем SignOutAsync для выхода
+                await _signInManager.SignOutAsync();
                 HttpContext.Session.Remove("UserId");
-                _logger.LogInformation("Успешный выход"); // Добавляем логирование
-                return Json(new { message = "Выход выполнен успешно!" });
+                HttpContext.Session.Remove("UserName");
+
+                _logger.LogInformation("Успешный выход");
+
+                // После выхода возвращаем на главную
+                return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Ошибка в Logout: {ex.Message}"); // Добавляем логирование
-                return BadRequest(ex.Message);
+                _logger.LogError($"Ошибка в Logout: {ex.Message}");
+
+                var errorResponse = new ErrorResponse();
+                errorResponse.Errors.Add("Server", new List<string> { "Произошла ошибка при выходе из системы." });
+
+                // В случае ошибки можно тоже вернуть на главную или показать ошибку
+                return RedirectToAction("Index", "Home");
             }
         }
+
+    }
+
+    // Модель для возврата ошибок
+    public class ErrorResponse
+    {
+        public Dictionary<string, List<string>> Errors { get; set; } = new();
+    }
+
+    // Модель логина
+    public class LoginViewModel
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

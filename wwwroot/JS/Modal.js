@@ -1,130 +1,131 @@
-const hamburgerMenu = document.getElementById('hamburger-menu');
-const navigationMenu = document.getElementById('navigation-menu');
-const openModalButton = document.getElementById('open-modal');
-const closeModalButton = document.getElementById('close-modal');
-const loginModal = document.getElementById('login-modal');
-const loginForm = document.getElementById('login-form');
-const errorMessages = document.getElementById('login-error-messages');
-const logoutButton = document.getElementById('logout-button'); // Получаем кнопку "Выйти"
-const userName = document.getElementById('user-name');
-
-if (openModalButton) {
-    openModalButton.addEventListener('click', () => {
-        loginModal.style.display = 'block';
-    });
-}
-
-if (closeModalButton) {
-    closeModalButton.addEventListener('click', () => {
-        loginModal.style.display = 'none';
-        errorMessages.innerHTML = '';
-    });
-}
-
-window.addEventListener('click', (event) => {
-    if (event.target === loginModal) {
-        loginModal.style.display = 'none';
-        errorMessages.innerHTML = '';
+document.addEventListener('DOMContentLoaded', () => {
+    const loginButton = document.getElementById('loginButton');
+    const logoutButton = document.getElementById('logoutButton');
+    const userName = document.getElementById('user-name');
+    const loginModal = document.getElementById('login-modal');
+    const loginForm = document.getElementById('login-form');
+    const errorMessages = document.getElementById('login-error-messages');
+    const closeModalButton = document.getElementById('close-modal');
+    const storedUserName = sessionStorage.getItem('userName');
+    if (storedUserName) {
+        loginButton.style.display = 'none';
+        logoutButton.style.display = 'block';
+        userName.textContent = `Привет, ${storedUserName}`;
+        userName.style.display = 'inline';
     }
-});
 
-if (hamburgerMenu) {
-    hamburgerMenu.addEventListener('click', function () {
-        navigationMenu.classList.toggle('active');
+    // Показ формы входа
+    if (loginButton && loginModal) {
+        loginButton.addEventListener('click', () => {
+            loginModal.style.display = 'block';
+        });
+    }
+
+    // Закрытие формы
+    if (closeModalButton && loginModal) {
+        closeModalButton.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+            errorMessages.innerHTML = '';
+        });
+    }
+
+    // Закрытие по клику вне формы
+    window.addEventListener('click', (event) => {
+        if (event.target === loginModal) {
+            loginModal.style.display = 'none';
+            errorMessages.innerHTML = '';
+        }
     });
-}
 
-// Обработчик отправки формы
-if (loginForm) {
-    loginForm.addEventListener('submit', (event) => {
-        event.preventDefault(); // Предотвращаем стандартную отправку формы
-        console.log('Форма отправлена');
-        const email = document.getElementById('login').value;
-        const password = document.getElementById('password').value;
-        const loginData = { email, password };
+    // Отправка формы входа
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
 
+            const email = document.getElementById('login').value;
+            const password = document.getElementById('password').value;
+            const loginData = { email, password };
+            errorMessages.innerHTML = '';
+
+            try {
+                const response = await fetch('/Login/Login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(loginData)
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+
+                    // Скрываем модалку
+                    loginModal.style.display = 'none';
+
+                    // Отображаем имя пользователя
+                    userName.textContent = `Привет, ${data.userName}`;
+                    userName.style.display = 'inline';
+
+                    // Переключаем кнопки
+                    loginButton.style.display = 'none';
+                    logoutButton.style.display = 'block';
+
+                    // Перезагрузка страницы или редирект (раскомментируй один из вариантов ниже, если нужно)
+                    // location.reload();
+                    // window.location.href = '/Home/Index';
+
+                } else if (response.status === 400) {
+                    const result = await response.json();
+                    displayValidationErrors(result.errors || {});
+                } else {
+                    const text = await response.text();
+                    throw new Error(`Ошибка сервера: ${response.status} - ${text}`);
+                }
+            } catch (error) {
+                errorMessages.innerHTML = `<p>${error.message}</p>`;
+                console.error('Ошибка при входе:', error);
+            }
+        });
+    }
+
+    // Выход из аккаунта
+    if (logoutButton) {
+        logoutButton.addEventListener('click', async () => {
+            try {
+                const response = await fetch('/Login/Logout', {
+                    method: 'POST',
+                });
+
+                if (response.ok) {
+                    window.location.href = '/';
+                } else {
+                    throw new Error('Ошибка при выходе');
+                }
+            } catch (error) {
+                alert('Ошибка при выходе');
+                console.error(error);
+            }
+        });
+    }
+
+    // Функция для отображения ошибок валидации
+    function displayValidationErrors(errors) {
         errorMessages.innerHTML = '';
 
-        fetch('/Login/Login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(loginData),
-        })
-        .then(response => {
-            console.log('response:', response);
-            if (response.ok) {
-                return response.json();
-            } else if (response.status === 400) {
-                return response.json().then(errors => {
-                    throw { errors: errors };
-                });
-            } else {
-                return response.text().then(text => {
-                    throw { message: `Ошибка сервера: ${response.status} - ${text}` };
-                });
-            }
-        })
-        .then(data => {
-            console.log('Успешный ответ:', data);
-            loginModal.style.display = 'none';
-            openModalButton.style.display = 'none'; // Скрываем кнопку "Войти"
-            logoutButton.style.display = 'block'; // Показываем кнопку "Выйти"
-            userName.textContent = `Привет, ${data.userName}`;
-            // Здесь можно обновить интерфейс, например, показать имя пользователя
-            //alert(data.message); // Убираем alert
-        })
-        .catch(error => {
-            console.error('Ошибка:', error);
-            errorMessages.innerHTML = '';
-            if (error.errors) {
-                displayValidationErrors(error.errors);
-            } else {
-                errorMessages.innerHTML = `<p>${error.message}</p>`;
-            }
-        });
-    });
-}
+        for (const key in errors) {
+            if (errors.hasOwnProperty(key)) {
+                const messages = errors[key];
 
-// Обработчик нажатия на кнопку "Выйти"
-console.log('logoutButton:', logoutButton);
-if (logoutButton) {
-    logoutButton.addEventListener('click', () => {
-        fetch('/Login/Logout', { // Замените на ваш URL для выхода
-            method: 'POST',
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('Ошибка при выходе');
+                if (Array.isArray(messages)) {
+                    messages.forEach(message => {
+                        const errorElement = document.createElement('p');
+                        errorElement.textContent = message;
+                        errorMessages.appendChild(errorElement);
+                    });
+                } else {
+                    const errorElement = document.createElement('p');
+                    errorElement.textContent = messages;
+                    errorMessages.appendChild(errorElement);
+                }
             }
-        })
-        .then(data => {
-            console.log('Успешный выход:', data);
-            openModalButton.style.display = 'block'; // Показываем кнопку "Войти"
-            logoutButton.style.display = 'none'; // Скрываем кнопку "Выйти"
-            userName.textContent = '';
-            //alert(data.message); // Убираем alert
-        })
-        .catch(error => {
-            console.error('Ошибка при выходе:', error);
-            alert('Ошибка при выходе');
-        });
-    });
-}
-
-function displayValidationErrors(errors) {
-    errorMessages.innerHTML = '';
-    for (const key in errors) {
-        if (errors.hasOwnProperty(key)) {
-            const errorMessagesForKey = errors[key];
-            errorMessagesForKey.forEach(message => {
-                const errorElement = document.createElement('p');
-                errorElement.textContent = message;
-                errorMessages.appendChild(errorElement);
-            });
         }
     }
-}
+});
