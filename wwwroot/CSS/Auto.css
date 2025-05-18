@@ -1,0 +1,157 @@
+.cars-container {
+    max-width: 1200px;
+    margin: 80px auto 40px auto;
+    color: #acacac;
+}
+
+.cars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding: 0 10px;
+    padding: 20px;
+}
+
+.car-card {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease-in-out;
+    position: relative;
+}
+
+.car-card:hover {
+    transform: translateY(-5px);
+}
+
+.car-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.car-info {
+    padding: 16px;
+    flex-grow: 1;
+}
+
+.car-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #222;
+}
+
+.car-details {
+    font-size: 0.95rem;
+    color: #000000;
+    margin-bottom: 8px;
+}
+
+/* Кнопка внутри карточки */
+.show-on-map-btn {
+    margin: 0 16px 16px 16px;
+    align-self: start;
+    padding: 10px 16px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+}
+
+.show-on-map-btn:hover {
+    background-color: #0056b3;
+}
+
+.btn-primary {
+    margin: 0 16px 16px 16px;
+    align-self: start;
+    padding: 10px 16px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    margin: 0 16px 16px 16px;
+    align-self: start;
+    padding: 10px 16px;
+    background-color: #c41700;
+    color: #fff;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+}
+
+
+/* Кнопка "Подробнее" */
+.toggle-details-btn {
+    margin-top: 2px;
+    padding: 8px 16px;
+    margin-left: -1px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-details-btn:hover {
+    background-color: #218838;
+}
+
+/* Скрытая информация */
+.car-details-hidden {
+    background-color: #f9f9f9;
+    padding: 0px;
+    border-top: 1px dashed #ccc;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+    .cars-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .cars-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.weather-recommendation {
+    background-color: #eef3f9;
+    border-left: 4px solid #007bff;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+    border-radius: 6px;
+}
+

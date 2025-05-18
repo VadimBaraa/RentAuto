@@ -1,0 +1,9 @@
+let myMap = null;
+let startPoint = null;
+let endPoint = null;
+let routeLine = null;
+let routePolyline = null;
+let userPlacemark = null;
+let startPlacemark= null;
+let finishPlacemark= null;
+let carPlacemark = null;

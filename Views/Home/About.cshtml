@@ -1,6 +1,9 @@
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
 @{
-    var userName = Context.Session.GetString("UserName");
+    var userName = Context.Request.Cookies["UserName"] ?? "Гость";
 }
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,6 +13,7 @@
     <title>RentAuto</title>
     <link rel="stylesheet" href="/CSS/Index.css">
     <link rel="stylesheet" href="/CSS/Login.css">
+    <link rel="stylesheet" href="/CSS/About.css">
 </head>
 <body>
     <header>
@@ -21,28 +25,60 @@
                 <li><a asp-controller="Home" asp-action="Index">Главная</a></li>
                 <li><a asp-controller="Home" asp-action="Auto">Автомобили</a></li>
                 <li class="active"><a asp-controller="Home" asp-action="About">О нас</a></li>
+                <li><a asp-controller="Home" asp-action="PersonalCabinet">Личный кабинет</a></li>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <li><a asp-controller="Home" asp-action="Admin">Управление арендой</a></li>
+                }
             </ul>
             <div class="user-actions">
-                @if (User.Identity != null && User.Identity.IsAuthenticated)
-                {
-                    @if (!string.IsNullOrEmpty(userName))
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
                     {
-                        <span>@userName</span>
+                        @if (!string.IsNullOrEmpty(userName))
+                        {
+                            <span class="user-name">@userName</span>
+                        }
+                        <form method="post" action="/Login/Logout" style="display:inline">
+                            <button type="submit" class="modal-button button">Выйти</button>
+                        </form>
                     }
-                    <form method="post" action="/Login/Logout" style="display:inline">
-                        <button type="submit" class="modal-button button">Выйти</button>
-                    </form>
-                }
-                else
-                {
-                    <span id="user-name" style="display:none"></span>
-                    <button id="loginButton" class="modal-button button">Войти</button>
-                    <button id="logoutButton" class="modal-button button" style="display:none">Выйти</button>
-                }
-            </div>
+                    else
+                    {
+                        <span id="user-name" class="user-name" style="display:none"></span>
+                        <button id="loginButton" class="modal-button button">Войти</button>
+                        <button id="logoutButton" class="modal-button button" style="display:none">Выйти</button>
+                    }
+                </div>
         </nav>
     </header>
 
+    <!-- Контент страницы "О нас" -->
+    <main class="about-section">
+        <h1>О нас</h1>
+        <p><strong>RentAuto</strong> — это современный сервис аренды автомобилей, созданный для тех, кто ценит свободу передвижения, комфорт и простоту. Мы стремимся сделать аренду авто такой же легкой, как заказ такси: быстро, прозрачно и удобно — через приложение или сайт.</p>
+
+        <h2>Что мы предлагаем:</h2>
+        <ul>
+            <li>🚗 <strong>Большой выбор автомобилей</strong> — от экономичных городских моделей до премиум-класса и внедорожников.</li>
+            <li>🕒 <strong>Аренда 24/7</strong> — доступ к автомобилю в любое время суток.</li>
+            <li>📍 <strong>Гибкая система локаций</strong> — арендуйте и возвращайте авто там, где удобно вам.</li>
+            <li>🔒 <strong>Прозрачные условия</strong> — никаких скрытых комиссий и мелкого шрифта.</li>
+            <li>📱 <strong>Простое управление</strong> — вся аренда через приложение: регистрация, выбор авто, оплата и поддержка.</li>
+        </ul>
+
+        <h2>Наша миссия</h2>
+        <p>Мы хотим, чтобы передвижение по городу стало удобным, доступным и приятным. <strong>RentAuto</strong> — это альтернатива личному автомобилю и такси, которая дает вам больше свободы и контроля.</p>
+
+        <h2>Почему выбирают нас:</h2>
+        <ul>
+            <li>Надежные и чистые автомобили</li>
+            <li>Круглосуточная поддержка</li>
+            <li>Гибкие тарифы</li>
+            <li>Простая регистрация и мгновенный старт</li>
+        </ul>
+    </main>
+
+    <!-- Модальное окно входа -->
     <div class="modal" id="login-modal">
         <div class="modal-content">
             <span class="close-modal" id="close-modal">&times;</span>
@@ -61,20 +97,6 @@
             <div id="login-error-messages"></div>
             <p>Нет аккаунта? <a asp-controller="Registration" asp-action="Registration" id="registration-modal">Зарегистрироваться</a></p>
         </div>
-    </div>
-
-    <div>
-        @if (Model != null)
-        {
-            foreach (var car in Model)
-            {
-                <p>@car.Brand - @car.Model</p>
-            }
-        }
-        else
-        {
-            <p>Нет доступных автомобилей.</p>
-        }
     </div>
 
     <script src="/JS/Index.js"></script>

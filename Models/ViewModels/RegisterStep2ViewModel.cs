@@ -6,10 +6,10 @@ namespace RentAutoWeb.Models.ViewModels
     {
         [Required(ErrorMessage = "Пожалуйста, введите паспортные данные.")]
         [Display(Name = "Паспортные данные")]
-        public string PassportData { get; set; }
+        public string? PassportData { get; set; }
 
         [Required(ErrorMessage = "Пожалуйста, введите данные ВУ.")]
         [Display(Name = "Данные ВУ")]
-        public string DriverLicense { get; set; }
+        public string? DriverLicense { get; set; }
     }
 }

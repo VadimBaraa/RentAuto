@@ -1,8 +1,10 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentAutoWeb", "RentAutoWeb.csproj", "{007EB5B1-8B4C-C4D2-75B4-769A5F70E2AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "..\..\Stajirovka\ConsoleApp1\ConsoleApp1.csproj", "{D6C2A419-AC8E-4ABB-AC91-355FF72E027D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,6 +16,14 @@ Global
 		{007EB5B1-8B4C-C4D2-75B4-769A5F70E2AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{007EB5B1-8B4C-C4D2-75B4-769A5F70E2AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{007EB5B1-8B4C-C4D2-75B4-769A5F70E2AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5D6FF63-BD8A-4BAF-A89D-1AD2527399F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5D6FF63-BD8A-4BAF-A89D-1AD2527399F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5D6FF63-BD8A-4BAF-A89D-1AD2527399F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5D6FF63-BD8A-4BAF-A89D-1AD2527399F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6C2A419-AC8E-4ABB-AC91-355FF72E027D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6C2A419-AC8E-4ABB-AC91-355FF72E027D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6C2A419-AC8E-4ABB-AC91-355FF72E027D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6C2A419-AC8E-4ABB-AC91-355FF72E027D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

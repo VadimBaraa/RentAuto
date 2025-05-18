@@ -83,15 +83,17 @@
             <div id="step-3" style="display: none;">
                 <div class="form-group">
                     <label for="passportPhoto">Фото паспорта:</label>
-                    <input type="file" id="passportPhoto" name="passportPhoto" accept="image/*" required>
+                    <input type="file" id="passportPhoto" name="PassportPhoto" accept="image/*" required>
                 </div>
                 <div class="form-group">
                     <label for="driverLicensePhoto">Фото ВУ:</label>
-                    <input type="file" id="driverLicensePhoto" name="driverLicensePhoto" accept="image/*" required>
+                    <input type="file" id="driverLicensePhoto" name="DriverLicensePhoto" accept="image/*" required>
                 </div>
+                <div id="errorMessages" style="color: red;"></div>
                 <button type="button" id="prev-step-2" class="button">Назад</button>
                 <button type="submit" class="button">Зарегистрироваться</button>
             </div>
+
         </form>
     </div>
     <script src="/JS/Registration.js"></script>

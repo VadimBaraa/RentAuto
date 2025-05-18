@@ -1,0 +1,122 @@
+@using RentAutoWeb.Models
+@using RentAutoWeb.Extensions
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var userName = Context.Request.Cookies["UserName"] ?? "Гость";
+}
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RentAuto</title>
+    <link rel="stylesheet" href="/CSS/Index.css" />
+    <link rel="stylesheet" href="/CSS/Login.css" />
+    <link rel="stylesheet" href="/CSS/PersonalCabinet.css" />
+
+</head>
+
+<body>
+    <div class="page-container">
+
+        <header>
+            <nav class="ContainerNavigation">
+                <div class="logo">
+                    <img src="/MEDIA/Logo.png" alt="Логотип RentAuto">
+                </div>
+                <ul class="navigation-menu">
+                    <li><a asp-controller="Home" asp-action="Index">Главная</a></li>
+                    <li><a asp-controller="Home" asp-action="Auto">Автомобили</a></li>
+                    <li><a asp-controller="Home" asp-action="About">О нас</a></li>
+                    <li class="active"><a asp-controller="Home" asp-action="PersonalCabinet">Личный кабинет</a></li>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li><a asp-controller="Home" asp-action="Admin">Управление арендой</a></li>
+                    }
+                </ul>
+                <div class="user-actions">
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        @if (!string.IsNullOrEmpty(userName))
+                        {
+                            <span class="user-name">@userName</span>
+                        }
+                        <form method="post" action="/Login/Logout" style="display:inline">
+                            <button type="submit" class="modal-button button">Выйти</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <span id="user-name" class="user-name" style="display:none"></span>
+                        <button id="loginButton" class="modal-button button">Войти</button>
+                        <button id="logoutButton" class="modal-button button" style="display:none">Выйти</button>
+                    }
+                </div>
+            </nav>
+        </header>
+        <main class="personal-cabinet">
+        @model List<RentAutoWeb.Models.Rental>
+
+        <h2>Ваши аренды</h2>
+
+        @if (Model != null && Model.Count > 0)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Авто</th>
+                            <th>Начало</th>
+                            <th>Окончание</th>
+                            <th>Статус</th>
+                            <th>Сумма к оплате</th>
+                            <th>Оплата</th>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <th>Действия</th>  <!-- отдельный столбец для кнопок -->
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var rental in Model)
+                    {
+                        <tr>
+                            <td>@rental.Car?.Brand @rental.Car?.Model</td>
+                            <td>@rental.StartDate.ToShortDateString()</td>
+                            <td>@rental.EndDate.ToShortDateString()</td>
+                            <td>@rental?.Status.GetDisplayName()</td>
+                            <td>@rental.TotalPrice.ToString("N2") руб</td>
+                            <td>
+                                @* Кнопка оплаты *@
+                                @if (rental.Status == RentalStatus.PendingPayment)
+                                {
+                                    <button class="btn btn-success start-payment"
+                                        data-car-id="@rental.CarId"
+                                        data-rental-id="@rental.Id">
+                                        Оплатить
+                                    </button>
+                                }
+                            </td>
+                            
+                        </tr>
+                    }
+                    </tbody>
+
+                </table>
+            }
+            else
+            {
+                <p>У вас пока нет активных аренд.</p>
+            }
+   
+
+        </main>  
+    </div>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="/JS/Index.js"></script>
+    <script src="/JS/Modal.js"></script>
+    <script src="/JS/Pay.js"></script>
+</body>
+</html>

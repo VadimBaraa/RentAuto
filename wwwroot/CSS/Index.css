@@ -1,96 +1,118 @@
-/* Стили для контейнера навигации */
+/* Основные настройки */
+:root {
+    --min-width: 1200px; /* Минимальная ширина контента */
+    --header-height: 80px;
+    --nav-bg-color: rgba(205, 205, 205, 0.5);
+    --text-color: #c2cfd1;
+    --hover-bg-color: whitesmoke;
+}
+
+/* Стили для body */
 body {
     background: rgb(26, 30, 32);
     margin: 0;
+    min-width: var(--min-width);
+    overflow-x: auto; /* Добавляем горизонтальную прокрутку при необходимости */
 }
 
-.ContainerNavigation {
-    
-    background: rgba(205, 205, 205, 0.5);
+/* Контейнер для всего содержимого */
+.page-container {
+    min-width: var(--min-width);
     width: 100%;
-    border-radius: 5px;
-    display: flex; /* Добавляем flex для контейнера навигации */
-    align-items: center; /* Выравниваем по центру по вертикали */
-    justify-content: space-between;
-    height: 80px; /* Задаем фиксированную высоту */
+    margin: 0 auto;
 }
 
-.logo{
+.a {
+    position: center;
+}
+
+/* Стили для контейнера навигации */
+.ContainerNavigation {
+    background: var(--nav-bg-color);
+    width: 100%;
+    min-width: var(--min-width);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-height);
+    position: fixed; /* Фиксируем навигацию */
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+/* Стили для логотипа */
+.logo {
     margin-left: 15px;
-    margin-top: 5px; /* Отступ слева */
-    /* font-size: 20px; Удалили */ /* Больше не нужен, так как мы используем изображение */
-    /* font-weight: bold; Удалили */ /* Больше не нужен, так как мы используем изображение */
+    margin-top: 5px;
+    min-width: 100px; /* Минимальная ширина для логотипа */
 }
 
 .logo img {
-    width: 100px; /* Ширина изображения */
-    height: auto; /* Высота изображения (автоматически подстраивается) */
-    /* max-height: 50px; */
-    /* max-width: 50px; */
+    width: 100px;
+    height: auto;
+    display: block;
 }
 
-/* Стили для самого меню */
+/* Стили для навигационного меню */
 .navigation-menu {
-    
-    list-style: none; /* Убираем маркеры списка */
-    margin: 0; /* Убираем внешние отступы */
-    padding: 0; /* Убираем внутренние отступы */
-    display: flex; /* Располагаем элементы в строку */
-    gap: 20px; /* Добавляем интервал между элементами */
-    align-items: center; /* Выравнивание по центру по вертикали*/
-    flex-wrap: nowrap; /* Предотвращаем перенос элементов на новую строку */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: nowrap;
     justify-content: center;
-    margin-right: 50px; /* Отступ справа */
-    width: 100%;
+    margin-right: 50px;
+    min-width: 500px; /* Минимальная ширина для меню */
 }
 
-/* Стили для каждого элемента меню */
+/* Стили для элементов меню */
 .navigation-menu li {
-    /* Стили, которые создают эффект "контейнера" */
-    background-color: transparent; /* Цвет фона элемента */
-    border: transparent; /* Рамка */
-    padding: 0; /* Убрали */ /* Внутренние отступы */
-    border-radius: 5px; /* Скругленные углы */
+    background-color: transparent;
+    border: transparent;
+    border-radius: 5px;
     transition: background-color 0.8s ease;
-    flex-shrink: 0; /* Запрещаем уменьшение элементов */
-    position: relative; /* Важно для позиционирования псевдоэлемента */
-    overflow: hidden; /* Скрываем псевдоэлемент за пределами элемента */
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    min-width: 100px; /* Минимальная ширина для пунктов меню */
+    /* text-align: center; */
 }
 
+/* Подчеркивание при наведении */
 .navigation-menu li::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 0; /* Изначально линия скрыта */
-    height: 2px; /* Толщина линии */
-    background-color: #c2cfd1; /* Цвет линии */
-    transition: width 0.3s ease-in-out; /* Плавное изменение ширины */
+    width: 0;
+    height: 2px;
+    background-color: var(--text-color);
+    transition: width 0.3s ease-in-out;
 }
 
 .navigation-menu li:hover::after,
 .navigation-menu li.active::after {
-    width: 100%; /* Показываем линию при наведении */
+    width: 100%;
 }
 
-.navigation-menu li.left::after {
-    left: auto;
-    right: 0;
-}
-
-/* Стили для ссылок */
+/* Стили для ссылок в меню */
 .navigation-menu a {
-    text-decoration: none; /* Убираем подчеркивание ссылок */
-    color: #c2cfd1; /* Цвет текста */
-    font-weight: bold; /* Жирный шрифт */
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: bold;
     transition: color 0.3s ease;
-    display: block; /* Делаем ссылку блочным элементом */
-    width: 100%; /* Занимает всю ширину контейнера */
-    height: 100%; /* Занимает всю высоту контейнера */
+    display: block;
+    width: 100%;
+    height: 100%;
     padding: 10px 20px;
+    white-space: nowrap; /* Предотвращаем перенос текста */
 }
 
-
+/* Стили для кнопок */
 .button {
     background: transparent;
     margin-right: 5px;
@@ -99,14 +121,84 @@ body {
     text-transform: uppercase;
     transition: 0.5s;
     background-size: 200% auto;
-    color: #c2cfd1;  
-    border:1px solid transparent;          
+    color: var(--text-color);
+    border: 1px solid transparent;
     border-radius: 10px;
     display: block;
+    min-width: 100px; /* Минимальная ширина для кнопок */
+    white-space: nowrap;
 }
 
 .button:hover {
-    background: whitesmoke;
+    background: var(--hover-bg-color);
     color: black;
     text-decoration: none;
+}
+
+/* Контейнер для основного содержимого */
+.main-content {
+    margin-top: calc(var(--header-height) + 20px); /* Отступ под фиксированной навигацией */
+    min-width: var(--min-width);
+    padding: 20px;
+}
+
+/* Стили для карты */
+.map-container {
+    min-width: var(--min-width);
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-top: var(--header-height); /* Отступ под навигацией */
+}
+
+.map-element {
+    min-width: calc(var(--min-width) - 40px); /* С учетом padding */
+    width: 100%;
+    height: 500px;
+}
+
+/* Медиа-запросы для больших экранов */
+@media screen and (min-width: 1920px) {
+    :root {
+        --min-width: 1400px;
+    }
+}
+
+/* Стили для скроллбара */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(205, 205, 205, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--text-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #95a5a6;
+}
+
+.user-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px; /* минимальный отступ */
+    font-family: Arial, sans-serif;
+    color: #95a5a6;
+    line-height: 1; /* компактнее строки */
+}
+
+/* Имя пользователя */
+.user-name {
+    font-size: 14px; /* меньше размер */
+    font-weight: normal;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    margin: 0;
+    padding: 0;
 }

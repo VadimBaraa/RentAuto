@@ -187,14 +187,18 @@ document.addEventListener('DOMContentLoaded', function () {
     function displayValidationErrors(errors) {
         errorMessages.innerHTML = '';
         for (const key in errors) {
-            if (errors.hasOwnProperty(key)) {
-                const errorMessagesForKey = errors[key];
-                errorMessagesForKey.forEach(message => {
+            if (Array.isArray(errors[key])) {
+                errors[key].forEach(message => {
                     const errorElement = document.createElement('p');
                     errorElement.textContent = message;
                     errorMessages.appendChild(errorElement);
                 });
+            } else {
+                const errorElement = document.createElement('p');
+                errorElement.textContent = errors[key];
+                errorMessages.appendChild(errorElement);
             }
         }
     }
+    
 });

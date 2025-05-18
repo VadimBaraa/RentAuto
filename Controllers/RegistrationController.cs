@@ -1,14 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using RentAutoWeb.Models;
 using RentAutoWeb.Models.ViewModels;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.IO;
-using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging; // Добавляем using
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
+
 
 namespace RentAutoWeb.Controllers
 {
@@ -36,7 +35,7 @@ namespace RentAutoWeb.Controllers
             return View();
         }
 
-        [HttpPost]
+       [HttpPost]
         public async Task<IActionResult> RegistrationStep1([FromBody] RegisterStep1ViewModel model)
         {
             _logger.LogInformation("Начало RegistrationStep1");
@@ -45,18 +44,31 @@ namespace RentAutoWeb.Controllers
                 if (!ModelState.IsValid)
                 {
                     _logger.LogWarning("Ошибка валидации в RegistrationStep1");
-                    return BadRequest(ModelState); // Возвращаем ошибки
+
+                    // Собираем все ошибки из ModelState в удобный для клиента формат
+                    var errors = ModelState
+                        .Where(ms => ms.Value.Errors.Count > 0)
+                        .ToDictionary(
+                            kvp => kvp.Key,
+                            kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                        );
+
+                    return BadRequest(errors); // Возвращаем ошибки с русскими сообщениями
                 }
+
+                // Сохраняем данные первого шага в сессии
                 HttpContext.Session.SetString("RegisterStep1", JsonSerializer.Serialize(model));
                 _logger.LogInformation("Успешное завершение RegistrationStep1");
+
                 return Ok(new { message = "Данные успешно сохранены" });
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Ошибка в RegistrationStep1: {ex.Message}");
-                return BadRequest(ex.Message);
+                return BadRequest(new { error = "Произошла ошибка на сервере" });
             }
         }
+
 
         [HttpPost]
         public async Task<IActionResult> RegistrationStep2([FromBody] RegisterStep2ViewModel model)
@@ -96,93 +108,97 @@ namespace RentAutoWeb.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    _logger.LogWarning("Ошибка валидации в RegistrationStep3");
-                    return ValidationProblem(ModelState);
+                    var errors = ModelState
+                        .Where(kvp => kvp.Value.Errors.Count > 0)
+                        .ToDictionary(
+                            kvp => kvp.Key,
+                            kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToList()
+                        );
+                    return BadRequest(errors);
                 }
 
-                var step1DataJson = HttpContext.Session.GetString("RegisterStep1");
-                var step2DataJson = HttpContext.Session.GetString("RegisterStep2");
+                var step1Json = HttpContext.Session.GetString("RegisterStep1");
+                var step2Json = HttpContext.Session.GetString("RegisterStep2");
 
-                if (string.IsNullOrEmpty(step1DataJson) || string.IsNullOrEmpty(step2DataJson))
+                if (string.IsNullOrEmpty(step1Json) || string.IsNullOrEmpty(step2Json))
                 {
-                    _logger.LogWarning("Previous steps data not found в RegistrationStep3");
-                    return BadRequest("Previous steps data not found.");
+                    _logger.LogWarning("Данные шагов 1 или 2 отсутствуют");
+                    return BadRequest("Не найдены данные регистрации. Пожалуйста, начните заново.");
                 }
-                RegisterStep1ViewModel step1Model = JsonSerializer.Deserialize<RegisterStep1ViewModel>(step1DataJson);
-                RegisterStep2ViewModel step2Model = JsonSerializer.Deserialize<RegisterStep2ViewModel>(step2DataJson);
 
-                User newUser = new User
+                var step1 = JsonSerializer.Deserialize<RegisterStep1ViewModel>(step1Json);
+                var step2 = JsonSerializer.Deserialize<RegisterStep2ViewModel>(step2Json);
+
+                // Сохраняем фото
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+                if (!Directory.Exists(uploadsFolder))
+                    Directory.CreateDirectory(uploadsFolder);
+
+                var passportPath = Path.Combine("uploads", Guid.NewGuid() + Path.GetExtension(model.PassportPhoto.FileName));
+                using (var stream = new FileStream(Path.Combine("wwwroot", passportPath), FileMode.Create))
                 {
-                    LastName = step1Model.LastName,
-                    FirstName = step1Model.FirstName,
-                    MiddleName = step1Model.MiddleName,
-                    Email = step1Model.Email,
-                    PhoneNumber = step1Model.Phone,
+                    await model.PassportPhoto.CopyToAsync(stream);
+                }
+
+                var licensePath = Path.Combine("uploads", Guid.NewGuid() + Path.GetExtension(model.DriverLicensePhoto.FileName));
+                using (var stream = new FileStream(Path.Combine("wwwroot", licensePath), FileMode.Create))
+                {
+                    await model.DriverLicensePhoto.CopyToAsync(stream);
+                }
+
+                // Создаём нового пользователя
+                var user = new User
+                {
+                    UserName = step1.Email,
+                    Email = step1.Email,
+                    FirstName = step1.FirstName,
+                    LastName = step1.LastName,
+                    MiddleName = step1.MiddleName,
+                    PhoneNumber = step1.Phone,
+                    PassportData = step2.PassportData,
+                    DriverLicense = step2.DriverLicense,
+                    PassportPhotoPath = passportPath,
+                    DriverLicensePhotoPath = licensePath
                 };
 
-                // Используем UserManager для создания пользователя и хеширования пароля
-                var result = await _userManager.CreateAsync(newUser, step1Model.Password);
-
+                var result = await _userManager.CreateAsync(user, step1.Password);
                 if (!result.Succeeded)
                 {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-                    return BadRequest(ModelState);
+                    var errors = result.Errors.ToDictionary(
+                        e => e.Code,
+                        e => new List<string> { e.Description }
+                    );
+                    _logger.LogWarning("Ошибка при создании пользователя: {@Errors}", errors);
+                    return BadRequest(errors);
                 }
 
-                // Сохраняем расширенную информацию
-                UserAdditionalInfo userAdditionalInfo = new UserAdditionalInfo
+                await _userManager.AddToRoleAsync(user, "User");    
+                await _signInManager.SignInAsync(user, isPersistent: true);
+
+                var claims = new List<Claim>
                 {
-                    PassportData = step2Model.PassportData,
-                    DriverLicense = step2Model.DriverLicense,
-                    UserId = newUser.Id,
+                    new Claim(ClaimTypes.Name, user.FirstName ?? user.UserName)
                 };
 
-                // Save files
-                if (model.PassportPhoto != null && model.PassportPhoto.Length > 0)
-                {
-                    var passportFileName = Guid.NewGuid().ToString() + Path.GetExtension(model.PassportPhoto.FileName);
-                    var passportFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", passportFileName);
-                    using (var stream = new FileStream(passportFilePath, FileMode.Create))
-                    {
-                        await model.PassportPhoto.CopyToAsync(stream);
-                    }
-                    userAdditionalInfo.PassportPhotoPath = "/uploads/" + passportFileName;
-                }
-                if (model.DriverLicensePhoto != null && model.DriverLicensePhoto.Length > 0)
-                {
-                    var driverLicenseFileName = Guid.NewGuid().ToString() + Path.GetExtension(model.DriverLicensePhoto.FileName);
-                    var driverLicenseFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", driverLicenseFileName);
-                    using (var stream = new FileStream(driverLicenseFilePath, FileMode.Create))
-                    {
-                        await model.DriverLicensePhoto.CopyToAsync(stream);
-                    }
-                    userAdditionalInfo.DriverLicensePhotoPath = "/uploads/" + driverLicenseFileName;
-                }
-                // Сохраняем в БД
-                _context.UserAdditionalInfos.Add(userAdditionalInfo);
-                await _context.SaveChangesAsync();
+                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
 
-                // Авторизуем пользователя
-                await _signInManager.SignInAsync(newUser, isPersistent: false);
+                HttpContext.Session.SetString("UserName", user.UserName);
+                _logger.LogInformation("Пользователь успешно зарегистрирован и вошёл в систему: {Email}", step1.Email);
 
-                // Сохраняем имя в сессию
-                HttpContext.Session.SetString("UserName", newUser.FirstName);
+                return Json(new { 
+                    message = "Регистрация успешно завершена. Спасибо!", 
+                    redirectUrl = Url.Action("Index", "Home") // или куда нужно
+                });
 
-                // Очищаем временные данные регистрации
-                HttpContext.Session.Remove("RegisterStep1");
-                HttpContext.Session.Remove("RegisterStep2");
-
-                // Редирект на главную
-                return RedirectToAction("Index", "Home");
+                
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Ошибка в RegistrationStep3: {ex.Message}");
-                return BadRequest(ex.Message);
+                return BadRequest(new { message = "Произошла ошибка при регистрации. Попробуйте позже." });
             }
         }
+
     }
 }

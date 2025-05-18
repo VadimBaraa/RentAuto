@@ -1,0 +1,73 @@
+@model RentAutoWeb.Models.Car
+
+<form id="add-car-form">
+    <div id="add-car-success" style="display:none;">Автомобиль успешно добавлен!</div>
+
+    <div class="form-group">
+        <label asp-for="Brand">Марка</label>
+        <input asp-for="Brand" class="form-control" placeholder="Введите марку автомобиля" required />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Model">Модель</label>
+        <input asp-for="Model" class="form-control" placeholder="Введите модель автомобиля" required />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Category">Категория</label>
+        <input asp-for="Category" class="form-control" placeholder="Например: Кроссовер, Седан, Хетчбек, Универсал" required />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="FuelType">Тип топлива</label>
+        <select asp-for="FuelType" class="form-control" required>
+            <option value="">Выберите тип топлива</option>
+            <option value="Бензин">Бензин</option>
+            <option value="Дизель">Дизель</option>
+            <option value="Электро">Электрическая</option>
+            <option value="Гибрид">Гибрид</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TransmissionType">Коробка передач</label>
+        <select asp-for="TransmissionType" class="form-control" required>
+            <option value="">Выберите тип коробки</option>
+            <option value="Механическая">Механическая</option>
+            <option value="Автомат">Автомат</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Year">Год выпуска</label>
+        <input asp-for="Year" type="number" class="form-control" min="1900" max="2099" required />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price">Цена за сутки (₽)</label>
+        <input asp-for="Price" type="number" class="form-control" placeholder="Укажите цену аренды" required />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ImageUrl">Ссылка на изображение</label>
+        <input asp-for="ImageUrl" type="url" class="form-control" placeholder="URL изображения машины" required />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description">Описание</label>
+        <textarea asp-for="Description" class="form-control" rows="4" placeholder="Введите описание автомобиля" required></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>
+            <input asp-for="IsAvailable" type="checkbox" />
+            Доступен для аренды
+        </label>
+    </div>
+
+    <!-- Latitude и Longitude будут задаваться автоматически в JS -->
+    <input type="hidden" asp-for="Latitude" />
+    <input type="hidden" asp-for="Longitude" />
+
+    <button type="submit" class="modal-button">Сохранить</button>
+</form>

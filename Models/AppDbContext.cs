@@ -11,6 +11,10 @@ namespace RentAutoWeb.Models
         }
         public new DbSet<User> Users { get; set; }
         public DbSet<Car> Cars { get; set; }
-        public DbSet<UserAdditionalInfo> UserAdditionalInfos { get; set; }
+        public DbSet<Rental> Rentals { get; set; }
+
+        public StripeSettings StripeSettings { get; set; }
     }
+    
+    
 }

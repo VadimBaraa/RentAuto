@@ -1,47 +1,147 @@
+@using RentAutoWeb.Models
+@using RentAutoWeb.Extensions
+
+@model List<RentAutoWeb.Models.CarWithRentalStatusViewModel>
+
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
 @{
-    var userName = Context.Session.GetString("UserName");
+    var userName = Context.Request.Cookies["UserName"] ?? "Гость";
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RentAuto</title>
-    <link rel="stylesheet" href="/CSS/Index.css">
-    <link rel="stylesheet" href="/CSS/Login.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Каталог авто – RentAuto</title>
+    <link rel="stylesheet" href="/CSS/Index.css" />
+    <link rel="stylesheet" href="/CSS/Login.css" />
+    <link rel="stylesheet" href="/CSS/Auto.css" />
+    <link rel="stylesheet" href="/CSS/Add.css" />
+    <link rel="stylesheet" href="/CSS/Rental.css" />
 </head>
 <body>
     <header>
         <nav class="ContainerNavigation">
             <div class="logo">
-                <img src="/MEDIA/Logo.png" alt="Логотип RentAuto">
+                <img src="/MEDIA/Logo.png" alt="Логотип RentAuto" />
             </div>
             <ul class="navigation-menu">
                 <li><a asp-controller="Home" asp-action="Index">Главная</a></li>
                 <li class="active"><a asp-controller="Home" asp-action="Auto">Автомобили</a></li>
                 <li><a asp-controller="Home" asp-action="About">О нас</a></li>
+                <li><a asp-controller="Home" asp-action="PersonalCabinet">Личный кабинет</a></li>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <li><a asp-controller="Home" asp-action="Admin">Управление арендой</a></li>
+                }
             </ul>
+
             <div class="user-actions">
-                @if (User.Identity != null && User.Identity.IsAuthenticated)
-                {
-                    @if (!string.IsNullOrEmpty(userName))
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
                     {
-                        <span>@userName</span>
+                        @if (!string.IsNullOrEmpty(userName))
+                        {
+                            <span class="user-name">@userName</span>
+                        }
+                        <form method="post" action="/Login/Logout" style="display:inline">
+                            <button type="submit" class="modal-button button">Выйти</button>
+                        </form>
                     }
-                    <form method="post" action="/Login/Logout" style="display:inline">
-                        <button type="submit" class="modal-button button">Выйти</button>
-                    </form>
-                }
-                else
-                {
-                    <span id="user-name" style="display:none"></span>
-                    <button id="loginButton" class="modal-button button">Войти</button>
-                    <button id="logoutButton" class="modal-button button" style="display:none">Выйти</button>
-                }
-            </div>
+                    else
+                    {
+                        <span id="user-name" class="user-name" style="display:none"></span>
+                        <button id="loginButton" class="modal-button button">Войти</button>
+                        <button id="logoutButton" class="modal-button button" style="display:none">Выйти</button>
+                    }
+                </div>
         </nav>
     </header>
+
+    <main class="cars-container">
+        <h2 class="section-title" style="text-align:center; margin-bottom: var(--spacing-lg);">Каталог автомобилей</h2>
+
+        @if (Model != null && Model.Any())
+        {
+            <div class="cars-grid">
+                @foreach (var car in Model)
+                {
+                    <div class="car-card">
+                        <img src="@car.Car.ImageUrl" alt="@car.Car.Brand @car.Car.Model" class="car-image" />
+                        <div class="car-info">
+                            <h3 class="car-title">@car.Car.Brand @car.Car.Model (@car.Car.Year)</h3>
+                            <p class="car-details"><strong>@car.Car.Price</strong> руб./сутки</p>
+
+                            <p class="car-details">
+                                <strong>Рекомендация:</strong> @(string.IsNullOrWhiteSpace(car.RecommendationHint) ? "Нет рекомендаций" : car.RecommendationHint)
+                            </p>
+                            
+                            <button type="button" class="btn btn-primary toggle-details-btn">Подробнее</button>
+
+                            <!-- Скрытая информация, которая откроется по клику -->
+                            <div class="car-details-hidden" style="display: none;">
+                                <pre>@(car.Rental?.Status.ToString() ?? "нет аренды")</pre>
+                                <p class="car-details"><strong>Категория:</strong> @car.Car.Category</p>
+                                <p class="car-details"><strong>Тип топлива:</strong> @car.Car.FuelType</p>
+                                <p class="car-details"><strong>Коробка передач:</strong> @car.Car.TransmissionType</p>
+                                <p class="car-details"><strong>Год:</strong> @car.Car.Year</p>
+                                <p class="car-details"><strong>Описание:</strong> @car.Car.Description</p>
+                            </div>
+                        </div>
+                        <div class="car-actions">
+                            <a class="card-button show-on-map-btn" 
+                            data-lat="@car.Car.Latitude.ToString("F8", System.Globalization.CultureInfo.InvariantCulture)"
+                            data-lon="@car.Car.Longitude.ToString("F8", System.Globalization.CultureInfo.InvariantCulture)"
+                            data-url="@Url.Action("Index", "Home")">
+                                Показать на карте
+                            </a>
+
+                                @if ((car.Rental?.Status == RentalStatus.Active) || (car.Rental?.Status == RentalStatus.PendingPayment))
+                                {
+                                    <button class="btn btn-secondary" disabled>Занят</button>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-primary" data-car-id="@car.Car.Id" onclick="openRentalModal(@car.Car.Id)">Арендовать</button>
+                                }
+                            
+                        </div>
+                    </div>
+                }
+
+            </div>
+        }
+        else
+        {
+            <p style="text-align:center">Нет доступных автомобилей.</p>
+        }
+
+        
+    @if (User.IsInRole("Admin"))
+    {
+        <button type="button" class="modal-button" onclick="openAddCarModal()">Добавить автомобиль</button>
+    }
+        
+
+        <!-- МОДАЛЬНОЕ ОКНО -->
+        <div class="modal" id="add-car-modal" style="display:none;">
+            <div class="modal-content">
+                <!-- Кнопка закрытия -->
+                <span class="close-modal" onclick="closeAddCarModal()">&times;</span>
+
+                <h2>Добавление автомобиля</h2>
+
+                <!-- Сообщение об успешном добавлении -->
+                <div id="add-car-success" style="display:none; color:green; margin-bottom: 10px;">
+                    Автомобиль успешно добавлен!
+                </div>
+
+                <!-- Форма добавления (частичное представление Add.cshtml) -->
+                @await Html.PartialAsync("Add", new RentAutoWeb.Models.Car())
+            </div>
+        </div>
+    </main>
 
     <div class="modal" id="login-modal">
         <div class="modal-content">
@@ -50,11 +150,11 @@
             <form id="login-form">
                 <div class="form-group">
                     <label for="login">Email:</label>
-                    <input type="email" id="login" name="login" required>
+                    <input type="email" id="login" name="login" required />
                 </div>
                 <div class="form-group">
                     <label for="password">Пароль:</label>
-                    <input type="password" id="password" name="password" required>
+                    <input type="password" id="password" name="password" required />
                 </div>
                 <button class="modal-button" type="submit">Войти</button>
             </form>
@@ -63,21 +163,23 @@
         </div>
     </div>
 
-    <div>
-        @if (Model != null)
-        {
-            foreach (var car in Model)
-            {
-                <p>@car.Brand - @car.Model</p>
-            }
-        }
-        else
-        {
-            <p>Нет доступных автомобилей.</p>
-        }
+    <!-- МОДАЛЬНОЕ ОКНО для аренды -->
+    <div class="modal" id="rental-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeRentalModal()">&times;</span>
+            <div id="rental-form-container">Загрузка...</div>
+        </div>
     </div>
+
+    <script>
+        const centerLat = @(ViewBag.CenterLat?.ToString(System.Globalization.CultureInfo.InvariantCulture) ?? "null");
+        const centerLon = @(ViewBag.CenterLon?.ToString(System.Globalization.CultureInfo.InvariantCulture) ?? "null");
+    </script>
 
     <script src="/JS/Index.js"></script>
     <script src="/JS/Modal.js"></script>
+    <script src="/JS/AddCar.js"></script>
+    <script src="/JS/MapInit.js"></script>
+    <script src="/JS/Rental.js"></script>
 </body>
 </html>

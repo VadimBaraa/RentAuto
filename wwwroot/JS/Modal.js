@@ -6,36 +6,52 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('login-form');
     const errorMessages = document.getElementById('login-error-messages');
     const closeModalButton = document.getElementById('close-modal');
+    
+    // Проверяем сохраненное имя пользователя
     const storedUserName = sessionStorage.getItem('userName');
-    if (storedUserName) {
+    if (storedUserName && loginButton && logoutButton && userName) {
         loginButton.style.display = 'none';
         logoutButton.style.display = 'block';
-        userName.textContent = `${storedUserName}`;
+        userName.textContent = storedUserName;
         userName.style.display = 'inline';
     }
 
     // Показ формы входа
     if (loginButton && loginModal) {
-        loginButton.addEventListener('click', () => {
-            loginModal.style.display = 'block';
+        loginButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.style.display = 'flex'; // Сначала показываем
+            requestAnimationFrame(() => {
+                loginModal.classList.add('active'); // Затем добавляем класс для анимации
+            });
         });
     }
 
     // Закрытие формы
-    if (closeModalButton && loginModal) {
-        closeModalButton.addEventListener('click', () => {
-            loginModal.style.display = 'none';
-            errorMessages.innerHTML = '';
-        });
+    function closeModal() {
+        if (loginModal) {
+            loginModal.classList.remove('active');
+            setTimeout(() => {
+                loginModal.style.display = 'none';
+                if (errorMessages) {
+                    errorMessages.innerHTML = '';
+                }
+            }, 300);
+        }
+    }
+
+    if (closeModalButton) {
+        closeModalButton.addEventListener('click', closeModal);
     }
 
     // Закрытие по клику вне формы
-    window.addEventListener('click', (event) => {
-        if (event.target === loginModal) {
-            loginModal.style.display = 'none';
-            errorMessages.innerHTML = '';
-        }
-    });
+    if (loginModal) {
+        loginModal.addEventListener('click', (event) => {
+            if (event.target === loginModal) {
+                closeModal();
+            }
+        });
+    }
 
     // Отправка формы входа
     if (loginForm) {
@@ -129,3 +145,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.toggle-details-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const details = btn.closest('.car-card').querySelector('.car-details-hidden');
+            const isVisible = details.style.display === 'block';
+            details.style.display = isVisible ? 'none' : 'block';
+            btn.textContent = isVisible ? 'Подробнее' : 'Скрыть';
+        });
+    });
+});
+

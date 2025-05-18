@@ -1,0 +1,23 @@
+@model RentAutoWeb.Models.Car
+
+
+    <span class="close-modal" onclick="closeRentalModal()">&times;</span>
+
+    <h2>Аренда автомобиля @Model.Brand @Model.Model</h2>
+
+    <form method="post" asp-controller="Rental" asp-action="ConfirmRental">
+        <input type="hidden" name="CarId" value="@Model.Id" />
+
+        <div class="form-group">
+            <label for="startDate">Начало аренды</label>
+            <input type="datetime-local" id="startDate" name="StartDate" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
+        </div>
+
+        <div class="form-group">
+            <label for="endDate">Конец аренды</label>
+            <input type="datetime-local" id="endDate" name="EndDate" value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-ddTHH:mm")" required />
+        </div>
+
+        <button type="submit" class="modal-button">Арендовать</button>
+    </form>
+

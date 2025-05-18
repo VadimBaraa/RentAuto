@@ -1,0 +1,91 @@
+/* --- PersonalCabinet --- */
+
+/* Контент основного блока */
+.personal-cabinet {
+    margin-top: calc(var(--header-height));
+    padding: 10px 60px;
+    color: var(--text-color);
+    text-align: center;
+}
+
+/* Заголовок */
+.personal-cabinet h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: var(--text-color);
+    margin: 0 auto;
+}
+
+/* Таблица аренд */
+.personal-cabinet table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.personal-cabinet th,
+.personal-cabinet td {
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.personal-cabinet th {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.personal-cabinet td {
+    color: var(--text-color);
+}
+
+.personal-cabinet tr:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Текст при отсутствии аренд */
+.personal-cabinet p {
+    font-size: 18px;
+    margin-top: 20px;
+    color: var(--text-color);
+}
+
+
+/* --- Кнопка завершения аренды --- */
+.btn-end-rental {
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.btn-end-rental:hover {
+    background-color: #c0392b;
+}
+
+/* --- Кнопка оплаты --- */
+.start-payment {
+    background-color: #2ecc71;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.start-payment:hover {
+    background-color: #27ae60;
+}

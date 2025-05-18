@@ -1,0 +1,111 @@
+/* МОДАЛЬНОЕ ОКНО */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* СОДЕРЖИМОЕ МОДАЛКИ */
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* АНИМАЦИЯ */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* КНОПКА ЗАКРЫТИЯ */
+.close-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    font-size: 1.5rem;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: #000;
+}
+
+/* СТИЛИ ФОРМЫ */
+form#add-car-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+form#add-car-form .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+form#add-car-form label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+form#add-car-form input,
+form#add-car-form textarea,
+form#add-car-form select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form#add-car-form textarea {
+    resize: vertical;
+}
+
+form#add-car-form button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 0.7rem 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+form#add-car-form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* УСПЕШНОЕ СООБЩЕНИЕ */
+#add-car-success {
+    font-size: 1rem;
+    color: green;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* АДАПТИВНОСТЬ */
+@media (max-width: 600px) {
+    .modal-content {
+        padding: 1rem;
+        margin: 10% 1rem;
+    }
+}

@@ -1,24 +1,38 @@
 .modal {
-    display: none; /* Скрыто по умолчанию */
-    position: fixed; /* Фиксированное положение */
-    z-index: 101; /* Поверх всего */
+    display: none;
+    position: fixed;
+    z-index: 1001;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto; /* Скролл, если нужно */
-    background-color: rgba(0, 0, 0, 0.4); /* Фон с прозрачностью */
+    background-color: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+    opacity: 1;
 }
 
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto; /* Отступ сверху и центрирование */
-    padding: 20px;
+    padding: 25px;
     border: 1px solid #888;
-    width: 300px; /* Ширина окна */
+    width: 100%;
+    max-width: 400px;
     border-radius: 10px;
     position: relative;
-    animation: slideIn 0.5s ease-in-out; /* Анимация появления */
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+    margin: 20px;
+}
+
+.modal.active .modal-content {
+    transform: translateY(0);
 }
 
 .close-modal {
@@ -136,4 +150,27 @@
         z-index: 100; /* Чтобы меню было поверх всего */
         padding: 20px;
     }
+
+    .userName {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Расстояние между элементами */
+    color: #aaa; /* Цвет текста */
+    font-family: Arial, sans-serif;
+}
+
+#user-name {
+    display: inline-block; /* Показывается как строка */
+    color: #aaa;
+    font-size: 16px;
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+
+
+
+
+
+
 }
