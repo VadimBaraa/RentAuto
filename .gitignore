@@ -28,4 +28,3 @@ Thumbs.db
 # Игнорировать файлы, созданные при публикации
 publish/
 
-osrm-data/central-fed-district-latest.osm.pbf
