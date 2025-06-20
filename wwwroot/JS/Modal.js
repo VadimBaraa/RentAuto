@@ -146,14 +146,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.toggle-details-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const details = btn.closest('.car-card').querySelector('.car-details-hidden');
-            const isVisible = details.style.display === 'block';
-            details.style.display = isVisible ? 'none' : 'block';
-            btn.textContent = isVisible ? 'Подробнее' : 'Скрыть';
-        });
+document.querySelectorAll('details').forEach(details => {
+    const card = details.closest('.car-card');
+    const fixedHeight = 550; // фиксированная высота до раскрытия
+
+    details.addEventListener('toggle', () => {
+        if (details.open) {
+            // раскрываем — сначала ставим фикс высоту, потом плавно расширяем до контента
+            card.style.height = fixedHeight + 'px';
+
+            // небольшая задержка, чтобы CSS transition сработал
+            setTimeout(() => {
+                // считаем полную высоту карточки с контентом
+                const fullHeight = details.scrollHeight + card.querySelector('.car-info').offsetHeight + 250; 
+                // 20 — запас под паддинги/отступы, подкорректируй если надо
+
+                card.style.height = fullHeight + 'px';
+            }, 10);
+        } else {
+            // закрываем — плавно сжимаем до фиксированной высоты
+            card.style.height = fixedHeight + 'px';
+        }
     });
 });
 

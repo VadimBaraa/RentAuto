@@ -1,0 +1,200 @@
+@model RentAutoWeb.Models.CarEditViewModel
+<h2>Редактировать автомобиль</h2>
+
+<form method="post" asp-controller="Car" asp-action="Edit">
+    <input type="hidden" asp-for="Car.Id" />
+
+    <!-- Основная информация об автомобиле -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Car.Brand">Марка:</label>
+                <input asp-for="Car.Brand" class="form-control" placeholder="Введите марку автомобиля" />
+                <span asp-validation-for="Car.Brand" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Car.Model">Модель:</label>
+                <input asp-for="Car.Model" class="form-control" placeholder="Введите модель автомобиля" />
+                <span asp-validation-for="Car.Model" class="text-danger"></span>
+            </div>
+
+            <div class="form-group"></div>
+                <label asp-for="Car.HorsePower">Мощность л.с.:</label>
+                <input asp-for="Car.HorsePower" class="form-control" placeholder="Введите мощность автомобиля" />
+                <span asp-validation-for="Car.HorsePower" class="text-danger"></span>
+            </div>
+
+            <div class="form-group"></div>
+                <label asp-for="Car.Color">Цвет:</label>
+                <input asp-for="Car.Color" class="form-control" placeholder="Введите цвет автомобиля" />
+                <span asp-validation-for="Car.Color" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Car.Year">Год:</label>
+                <input asp-for="Car.Year" class="form-control" type="number" min="1900" max="2030" placeholder="Год выпуска" />
+                <span asp-validation-for="Car.Year" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Car.Price">Цена за сутки (руб.):</label>
+                <input asp-for="Car.Price" class="form-control" type="number" step="0.01" min="0" placeholder="0.00" />
+                <span asp-validation-for="Car.Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Car.Category">Категория:</label>
+                <input asp-for="Car.Category" class="form-control" placeholder="Например: Седан, Хэтчбек, Кроссовер" />
+                <span asp-validation-for="Car.Category" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Car.FuelType">Тип топлива:</label>
+                <select asp-for="Car.FuelType" class="form-control">
+                    <option value="">Выберите тип топлива</option>
+                    <option value="Бензин">Бензин</option>
+                    <option value="Дизель">Дизель</option>
+                    <option value="Гибрид">Гибрид</option>
+                    <option value="Электро">Электро</option>
+                    <option value="Газ">Газ</option>
+                </select>
+                <span asp-validation-for="Car.FuelType" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Car.TransmissionType">Тип коробки передач:</label>
+                <select asp-for="Car.TransmissionType" class="form-control">
+                    <option value="">Выберите тип КПП</option>
+                    <option value="Механика">Механика</option>
+                    <option value="Автомат">Автомат</option>
+                    <option value="Робот">Робот</option>
+                    <option value="Вариатор">Вариатор</option>
+                </select>
+                <span asp-validation-for="Car.TransmissionType" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Car.AutoNumber">Номер автомобиля:</label>
+                <input asp-for="Car.AutoNumber" class="form-control" placeholder="А123БВ77" maxlength="9" />
+                <span asp-validation-for="Car.AutoNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Car.VinNumber">VIN-номер:</label>
+                <input asp-for="Car.VinNumber" class="form-control" placeholder="Введите VIN автомобиля" />
+                <span asp-validation-for="Car.VinNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Car.EngineNumber">Номер двигателя:</label>
+                <input asp-for="Car.EngineNumber" class="form-control" placeholder="Введите номер двигателя" />
+                <span asp-validation-for="Car.EngineNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group"></div>
+                <label asp-for="Car.BodyNumber">Номер кузова:</label>
+                <input asp-for="Car.BodyNumber" class="form-control" placeholder="Введите номер кузова" />
+                <span asp-validation-for="Car.BodyNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Car.ImageUrl">URL изображения:</label>
+                <input asp-for="Car.ImageUrl" class="form-control" type="url" placeholder="https://example.com/image.jpg" />
+                <span asp-validation-for="Car.ImageUrl" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Car.Description">Описание:</label>
+                <textarea asp-for="Car.Description" class="form-control" rows="3" placeholder="Опишите особенности автомобиля"></textarea>
+                <span asp-validation-for="Car.Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group checkbox-group">
+                <input asp-for="Car.IsAvailable" type="checkbox" class="form-check-input" id="IsAvailable" />
+                <label asp-for="Car.IsAvailable" class="form-check-label"></label>
+                <span asp-validation-for="Car.IsAvailable" class="text-danger"></span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- История ТО -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h4>📋 История технического обслуживания</h4>
+            
+            @if (Model.Car.MaintenanceRecords != null && Model.Car.MaintenanceRecords.Any())
+            {
+                <div class="maintenance-history" style="max-height: 300px; overflow-y: auto; background: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                    @foreach (var record in Model.Car.MaintenanceRecords.OrderByDescending(x => x.MaintenanceDate))
+                    {
+                        <div style="border-left: 4px solid #007bff; padding-left: 15px; margin-bottom: 15px; background: white; padding: 10px; border-radius: 3px;">
+                            <div style="font-weight: bold; color: #007bff;">
+                                📅 @record.MaintenanceDate.ToString("dd.MM.yyyy")
+                            </div>
+                            <div style="margin-top: 5px;">
+                                @record.Description
+                            </div>
+                            @if (record.CreatedAt.HasValue)
+                            {
+                                <small style="color: #6c757d;">
+                                    Добавлено: @record.CreatedAt.Value.ToString("dd.MM.yyyy HH:mm")
+                                </small>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 5px; margin-bottom: 20px;">
+                    <p style="color: #6c757d; margin: 0;">История ТО пуста</p>
+                </div>
+            }
+
+            <!-- Форма добавления нового ТО -->
+            <div style="background: #e7f3ff; padding: 20px; border-radius: 5px; border: 1px solid #b3d9ff;">
+                <h5 style="margin-bottom: 15px;">➕ Добавить запись ТО</h5>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="NewMaintenanceRecord.MaintenanceDate">Дата ТО:</label>
+                            <input asp-for="NewMaintenanceRecord.MaintenanceDate" class="form-control" type="date" />
+                            <span asp-validation-for="NewMaintenanceRecord.MaintenanceDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="NewMaintenanceRecord.Description">Описание работ:</label>
+                            <input asp-for="NewMaintenanceRecord.Description" class="form-control" placeholder="Описание проведенных работ" />
+                            <span asp-validation-for="NewMaintenanceRecord.Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <small style="color: #6c757d;">
+                    💡 Оставьте поля пустыми, если не хотите добавлять новую запись ТО
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Скрытые поля -->
+    <input asp-for="Car.Latitude" type="hidden" />
+    <input asp-for="Car.Longitude" type="hidden" />
+    <input asp-for="NewMaintenanceRecord.CarId" type="hidden" value="@Model.Car.Id" />
+
+    <!-- Кнопки -->
+    <div class="form-buttons mt-4">
+        <button type="submit" class="btn btn-primary">
+            💾 Сохранить изменения
+        </button>
+        <button type="button" class="btn btn-secondary close-edit-modal">
+            ❌ Отмена
+        </button>
+    </div>
+</form>
+

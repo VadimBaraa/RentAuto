@@ -84,7 +84,16 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.Use(async (context, next) =>
+{
+    var watch = System.Diagnostics.Stopwatch.StartNew();
 
+    await next.Invoke();
+
+    watch.Stop();
+    var logMessage = $"[{DateTime.Now}] {context.Request.Method} {context.Request.Path} took {watch.ElapsedMilliseconds} ms";
+    Console.WriteLine(logMessage);
+});
 app.UseStaticFiles();
 
 app.UseRouting();

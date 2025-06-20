@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentAutoWeb", "RentAutoWeb.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "..\..\Stajirovka\ConsoleApp1\ConsoleApp1.csproj", "{D6C2A419-AC8E-4ABB-AC91-355FF72E027D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aton_CRUD_User", "..\..\Stajirovka\Aton_CRUD_User\Aton_CRUD_User.csproj", "{38EE91D7-C817-46BF-9965-40D4BE6473D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentAutoDesktop", "..\..\Stajirovka\RentAutoDesktop\RentAutoDesktop.csproj", "{499EA5B9-202A-4588-B95C-F94E0AE53B13}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +28,14 @@ Global
 		{D6C2A419-AC8E-4ABB-AC91-355FF72E027D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6C2A419-AC8E-4ABB-AC91-355FF72E027D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6C2A419-AC8E-4ABB-AC91-355FF72E027D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38EE91D7-C817-46BF-9965-40D4BE6473D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38EE91D7-C817-46BF-9965-40D4BE6473D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38EE91D7-C817-46BF-9965-40D4BE6473D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38EE91D7-C817-46BF-9965-40D4BE6473D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{499EA5B9-202A-4588-B95C-F94E0AE53B13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{499EA5B9-202A-4588-B95C-F94E0AE53B13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{499EA5B9-202A-4588-B95C-F94E0AE53B13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{499EA5B9-202A-4588-B95C-F94E0AE53B13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

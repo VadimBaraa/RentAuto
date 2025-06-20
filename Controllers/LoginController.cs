@@ -122,13 +122,6 @@ namespace RentAutoWeb.Controllers
             public Dictionary<string, List<string>> Errors { get; set; } = new();
         }
 
-        // Модель логина
-        public class LoginViewModel
-        {
-            public string Email { get; set; }
-            public string Password { get; set; }
-        }
-
 
     }
 }

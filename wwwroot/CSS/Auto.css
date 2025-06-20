@@ -8,8 +8,8 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
-    padding: 0 10px;
     padding: 20px;
+    align-items: start;
 }
 
 .car-card {
@@ -20,12 +20,25 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s ease-in-out;
+    transition: height 0.4s ease, transform 0.2s ease-in-out;
     position: relative;
+    height: 550px; /* фиксированная высота до раскрытия */
+    cursor: default;
+}
+
+.car-card.expanded {
+    height: auto; /* в JS меняем на высоту контента */
+    overflow: visible;
 }
 
 .car-card:hover {
     transform: translateY(-5px);
+}
+
+/* При раскрытии details меняем высоту на auto (с помощью max-height и JS — если нужен плавный переход) */
+.car-card[open] {
+    height: auto;
+    cursor: auto;
 }
 
 .car-image {
@@ -37,6 +50,7 @@
 .car-info {
     padding: 16px;
     flex-grow: 1;
+    overflow: hidden;
 }
 
 .car-title {
@@ -52,98 +66,204 @@
     margin-bottom: 8px;
 }
 
-/* Кнопка внутри карточки */
-.show-on-map-btn {
-    margin: 0 16px 16px 16px;
-    align-self: start;
-    padding: 10px 16px;
-    background-color: #007bff;
-    color: #fff;
-    font-size: 0.95rem;
-    border: none;
-    border-radius: 6px;
+details summary {
+    list-style: none; /* убрать стандартную стрелку */
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-decoration: none;
-    text-align: center;
-}
-
-.show-on-map-btn:hover {
-    background-color: #0056b3;
-}
-
-.btn-primary {
-    margin: 0 16px 16px 16px;
-    align-self: start;
-    padding: 10px 16px;
-    background-color: #007bff;
-    color: #fff;
-    font-size: 0.95rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-decoration: none;
-    text-align: center;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-}
-
-.btn-secondary {
-    margin: 0 16px 16px 16px;
-    align-self: start;
-    padding: 10px 16px;
-    background-color: #c41700;
-    color: #fff;
-    font-size: 0.95rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-decoration: none;
-    text-align: center;
-}
-
-
-/* Кнопка "Подробнее" */
-.toggle-details-btn {
-    margin-top: 2px;
     padding: 8px 16px;
-    margin-left: -1px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
+    font-weight: 500; /* чуть меньше жирности для мягкости */
+    font-size: 0.95rem; /* чуть меньше размер */
+    color: #007bff;
+    text-decoration: none;
+    border: 2px solid #007bff;
+    border-radius: 20px; /* делаем более округлым */
+    width: max-content;
+    user-select: none;
+    position: relative;
+    display: inline-block;
+    transition: all 0.3s ease; /* анимируем все свойства */
+    background: white; /* добавляем белый фон */
+    
 }
 
-.toggle-details-btn:hover {
-    background-color: #218838;
+/* Убираем маркер по умолчанию */
+details summary::-webkit-details-marker {
+    display: none;
 }
 
-/* Скрытая информация */
-.car-details-hidden {
+/* Добавляем стрелочку справа */
+details summary::after {
+    content: '▼'; /* меняем на стрелку вниз */
+    display: inline-block;
+    margin-left: 8px;
+    transition: transform 0.3s ease;
+    font-size: 0.8rem; /* делаем стрелку чуть меньше */
+}
+
+/* При открытом details стрелочка поворачивается */
+details[open] summary::after {
+    transform: rotate(180deg); /* поворачиваем на 180 градусов */
+}
+
+/* Эффект наведения */
+details summary:hover {
+    border-color: #0056b3;
+    transform: translateY(-1px); /* легкий подъем при наведении */
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3); /* добавляем тень */
+}
+
+/* Состояние фокуса для доступности */
+details summary:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* Дополнительный эффект при активном состоянии */
+details summary:active {
+    transform: translateY(0);
+}
+
+details .details-content {
     background-color: #f9f9f9;
-    padding: 0px;
-    border-top: 1px dashed #ccc;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-top: 8px;
+    overflow: auto;
+    max-height: 300px; /* ограничение высоты контента */
 }
 
-/* Адаптивность */
-@media (max-width: 1024px) {
-    .cars-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
+        /* Стили для истории ТО */
+        .maintenance-history {
+            margin-top: 15px;
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 12px;
+        }
 
-@media (max-width: 640px) {
-    .cars-grid {
-        grid-template-columns: 1fr;
-    }
-}
+        .maintenance-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .records-count {
+            font-size: 0.85rem;
+            color: #666;
+            font-weight: normal;
+        }
+
+        .maintenance-record {
+            background-color: #f8f9fa;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            border-left: 3px solid #007bff;
+        }
+
+        .record-date {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .more-records {
+            text-align: center;
+            padding: 8px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .no-maintenance {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        .no-maintenance-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        /* Кнопки */
+        .car-actions {
+            padding: 0 16px 16px 16px;
+        }
+
+        .show-on-map-btn {
+            margin: 0 16px 16px 16px;
+            align-self: start;
+            padding: 10px 16px;
+            background-color: 
+        #007bff;
+            color: #fff;
+            font-size: 0.92rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .show-on-map-btn:hover {
+            background-color: 
+        #0056b3;
+        }
+
+        .btn-primary {
+            margin: 0 10px 10px 16px;
+            align-self: start;
+            padding: 10px 12px;
+            background-color: 
+        #007bff;
+            color: #fff;
+            font-size: 0.90rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-primary:hover {
+            background-color: 
+        #0056b3;
+        }
+
+        .btn-secondary {
+            margin: 0 16px 16px 16px;
+            align-self: start;
+            padding: 10px 16px;
+            background-color: 
+        #c41700;
+            color: #fff;
+            font-size: 0.95rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        
+
+        /* Адаптивность */
+        @media (max-width: 1024px) {
+            .cars-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .cars-grid {
+                grid-template-columns: 1fr;
+            }
+        }
 
 .weather-recommendation {
     background-color: #eef3f9;
@@ -155,3 +275,226 @@
     border-radius: 6px;
 }
 
+/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+/* CSS для модального окна редактирования автомобиля */
+/* Добавьте этот код в ваш CSS файл или в <style> секцию */
+
+.car-edit-modal {
+    display: none !important; /* !important чтобы перекрыть другие стили */
+    position: fixed !important;
+    z-index: 99999 !important; /* Очень высокий z-index */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.car-edit-modal.show {
+    display: block !important; /* Класс для показа модального окна */
+}
+
+.car-edit-modal-content {
+    background-color: #fff;
+    margin: 50px auto;
+    padding: 25px;
+    width: 90%;
+    max-width: 650px;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    position: relative;
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.car-edit-close {
+    color: #999;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: none;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    z-index: 1;
+    transition: color 0.2s;
+}
+
+.car-edit-close:hover,
+.car-edit-close:focus {
+    color: #000;
+    text-decoration: none;
+}
+
+/* Стили для формы редактирования */
+.car-edit-modal h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+    padding-right: 40px;
+    font-size: 24px;
+}
+
+.car-edit-modal .form-group {
+    margin-bottom: 15px;
+}
+
+.car-edit-modal .form-control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.car-edit-modal .form-control:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.car-edit-modal label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+}
+
+.car-edit-modal .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.car-edit-modal .btn-primary {
+    
+    background-color: #007bff;
+    color: white;
+}
+
+.car-edit-modal .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.car-edit-modal .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.car-edit-modal .btn-secondary:hover {
+    background-color: #545b62;
+}
+
+.car-edit-modal .text-danger {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
+.car-edit-modal textarea.form-control {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.car-edit-modal input[type="checkbox"] {
+    width: auto !important;
+    margin-right: 8px;
+    transform: scale(1.2);
+}
+
+.car-edit-modal .checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.car-edit-modal .checkbox-group label {
+    margin-bottom: 0;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.car-edit-modal .form-buttons {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    text-align: right;
+}
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+    
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .form-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+    }
+    
+    .maintenance-history {
+        border: 1px solid #dee2e6;
+    }
+    
+    .maintenance-history::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .maintenance-history::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+    
+    .maintenance-history::-webkit-scrollbar-thumb {
+        background: #007bff;
+        border-radius: 3px;
+    }
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .car-edit-modal-content {
+        width: 95%;
+        margin: 20px auto;
+        padding: 20px;
+        max-height: 90vh;
+    }
+    
+    .car-edit-modal {
+        padding: 10px;
+    }
+}

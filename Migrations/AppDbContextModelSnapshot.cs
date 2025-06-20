@@ -22,6 +22,33 @@ namespace RentAutoWeb.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AnalyticsReport", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("MostPopularCarId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ReportDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TotalRentals")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalRevenue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MostPopularCarId");
+
+                    b.ToTable("AnalyticsReports");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
                 {
                     b.Property<int>("Id")
@@ -163,16 +190,31 @@ namespace RentAutoWeb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AutoNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BodyNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Category")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("EngineNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FuelType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HorsePower")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
@@ -196,12 +238,42 @@ namespace RentAutoWeb.Migrations
                     b.Property<string>("TransmissionType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("VinNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("Cars");
+                });
+
+            modelBuilder.Entity("RentAutoWeb.Models.MaintenanceRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CarId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("MaintenanceDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CarId");
+
+                    b.ToTable("MaintenanceRecords", (string)null);
                 });
 
             modelBuilder.Entity("RentAutoWeb.Models.Rental", b =>
@@ -330,6 +402,15 @@ namespace RentAutoWeb.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("AnalyticsReport", b =>
+                {
+                    b.HasOne("RentAutoWeb.Models.Car", "MostPopularCar")
+                        .WithMany()
+                        .HasForeignKey("MostPopularCarId");
+
+                    b.Navigation("MostPopularCar");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
@@ -381,6 +462,17 @@ namespace RentAutoWeb.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("RentAutoWeb.Models.MaintenanceRecord", b =>
+                {
+                    b.HasOne("RentAutoWeb.Models.Car", "Car")
+                        .WithMany("MaintenanceRecords")
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Car");
+                });
+
             modelBuilder.Entity("RentAutoWeb.Models.Rental", b =>
                 {
                     b.HasOne("RentAutoWeb.Models.Car", "Car")
@@ -402,6 +494,8 @@ namespace RentAutoWeb.Migrations
 
             modelBuilder.Entity("RentAutoWeb.Models.Car", b =>
                 {
+                    b.Navigation("MaintenanceRecords");
+
                     b.Navigation("Rentals");
                 });
 #pragma warning restore 612, 618

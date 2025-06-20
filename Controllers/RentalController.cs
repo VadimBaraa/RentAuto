@@ -17,12 +17,12 @@ public class RentalController : Controller
     public async Task<IActionResult> Rental(int carId)
     {
         var car = await _context.Cars.FindAsync(carId);
+        Console.WriteLine($"Rental request carId={carId}, found={(car != null ? "yes" : "no")}, IsAvailable={(car?.IsAvailable.ToString() ?? "N/A")}");
         if (car == null || !car.IsAvailable)
             return NotFound();
 
         return PartialView("~/Views/Home/Rental.cshtml", car);
     }
-
 
    [HttpPost]
     public async Task<IActionResult> ConfirmRental(int CarId, DateTime StartDate, DateTime EndDate)

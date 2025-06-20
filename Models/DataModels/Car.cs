@@ -21,7 +21,14 @@ namespace RentAutoWeb.Models
         public string? Category { get; set; }  // Например: Эконом, Бизнес, Премиум
         public string? TransmissionType { get; set; }
         public string? FuelType { get; set; }
+        public string? VinNumber { get; set; }
+        public string? EngineNumber { get; set; }
+        public string? AutoNumber { get; set; }
+        public string? HorsePower { get; set; }
+        public string? BodyNumber { get; set; }
+        public string? Color { get; set; }
         public virtual ICollection<Rental> Rentals { get; set; } = new List<Rental>();
+        public List<MaintenanceRecord> MaintenanceRecords { get; set; }
 
     }
 }

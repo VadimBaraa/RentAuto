@@ -72,23 +72,64 @@
                         <div class="car-info">
                             <h3 class="car-title">@car.Car.Brand @car.Car.Model (@car.Car.Year)</h3>
                             <p class="car-details"><strong>@car.Car.Price</strong> руб./сутки</p>
-
                             <p class="car-details">
                                 <strong>Рекомендация:</strong> @(string.IsNullOrWhiteSpace(car.RecommendationHint) ? "Нет рекомендаций" : car.RecommendationHint)
                             </p>
                             
-                            <button type="button" class="btn btn-primary toggle-details-btn">Подробнее</button>
-
-                            <!-- Скрытая информация, которая откроется по клику -->
-                            <div class="car-details-hidden" style="display: none;">
-                                <pre>@(car.Rental?.Status.ToString() ?? "нет аренды")</pre>
+                            <details>
+                                <summary >Подробнее</summary>
+                                <div class="details-content">
                                 <p class="car-details"><strong>Категория:</strong> @car.Car.Category</p>
+                                <p class="car-details"><strong>Цвет:</strong> @car.Car.Color</p>
+                                <p class="car-details"><strong>Мощность л.с.:</strong> @car.Car.HorsePower</p>
                                 <p class="car-details"><strong>Тип топлива:</strong> @car.Car.FuelType</p>
                                 <p class="car-details"><strong>Коробка передач:</strong> @car.Car.TransmissionType</p>
                                 <p class="car-details"><strong>Год:</strong> @car.Car.Year</p>
                                 <p class="car-details"><strong>Описание:</strong> @car.Car.Description</p>
-                            </div>
+                                <p class="car-details"><strong>Номер авто:</strong> @car.Car.AutoNumber</p>
+
+                                <!-- Здесь твоя история ТО -->
+                                @if (car.MaintenanceRecords != null && car.MaintenanceRecords.Any())
+                                {
+                                    <div class="maintenance-history">
+                                        <div class="maintenance-header">
+                                            <strong>📋 История техобслуживания</strong>
+                                            <span class="records-count">(@car.MaintenanceRecords.Count() записей)</span>
+                                        </div>
+                                        
+                                        <div class="maintenance-records">
+                                            @foreach (var record in car.MaintenanceRecords.OrderByDescending(r => r.MaintenanceDate).Take(3))
+                                            {
+                                                <div class="maintenance-record">
+                                                    <div class="record-date">
+                                                        📅 @(record.MaintenanceDate.ToString("dd.MM.yyyy") ?? "Не указано")
+                                                        @(string.IsNullOrEmpty(record.Description) ? "Описание отсутствует" : record.Description)
+                                                    </div>
+                                                </div>
+                                            }
+                                            
+                                            @if (car.MaintenanceRecords.Count() > 3)
+                                            {
+                                                <div class="more-records">
+                                                    <small>И еще @(car.MaintenanceRecords.Count() - 3) записей...</small>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="no-maintenance">
+                                        <div class="no-maintenance-icon">🔧</div>
+                                        <p>Нет записей о техобслуживании</p>
+                                        <small>История ТО будет отображаться здесь</small>
+                                    </div>
+                                }
+                                </div>                               
+                            </details>
                         </div>
+                        <!-- Остальной код карточки -->
+                    
                         <div class="car-actions">
                             <a class="card-button show-on-map-btn" 
                             data-lat="@car.Car.Latitude.ToString("F8", System.Globalization.CultureInfo.InvariantCulture)"
@@ -103,11 +144,21 @@
                                 }
                                 else
                                 {
-                                    <button class="btn btn-primary" data-car-id="@car.Car.Id" onclick="openRentalModal(@car.Car.Id)">Арендовать</button>
+                                    <button class="btn-primary" data-car-id="@car.Car.Id" onclick="openRentalModal(@car.Car.Id)">Арендовать</button>
                                 }
                             
                         </div>
+
+                        <div class="car-actions">
+                            @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                            {
+                                <button class="open-edit-modal btn-primary" data-id="@car.Car.Id">✏️ Редактировать</button>
+                            }
+                        </div>
+
+                        
                     </div>
+                    
                 }
 
             </div>
@@ -141,6 +192,8 @@
                 @await Html.PartialAsync("Add", new RentAutoWeb.Models.Car())
             </div>
         </div>
+
+    
     </main>
 
     <div class="modal" id="login-modal">
@@ -171,13 +224,27 @@
         </div>
     </div>
 
+    <div class="car-edit-modal" id="car-edit-modal">
+        <div class="car-edit-modal-content" id="car-edit-modal-content">
+            <span class="car-edit-close" id="car-edit-close">&times;</span>
+            <div id="car-edit-form-container" style="clear:both; padding-top:10px;">
+                <!-- Сюда будет загружаться форма редактирования через AJAX -->
+                <div style="text-align: center; padding: 20px;">
+                    <p>Загрузка формы...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         const centerLat = @(ViewBag.CenterLat?.ToString(System.Globalization.CultureInfo.InvariantCulture) ?? "null");
         const centerLon = @(ViewBag.CenterLon?.ToString(System.Globalization.CultureInfo.InvariantCulture) ?? "null");
     </script>
-
+    
     <script src="/JS/Index.js"></script>
     <script src="/JS/Modal.js"></script>
+    <script src="/JS/EditModal.js"></script>
     <script src="/JS/AddCar.js"></script>
     <script src="/JS/MapInit.js"></script>
     <script src="/JS/Rental.js"></script>

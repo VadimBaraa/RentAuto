@@ -59,13 +59,43 @@
     </div>
 
     <div class="form-group">
+        <label asp-for="VinNumber">VIN-номер</label>
+        <input asp-for="VinNumber" class="form-control" placeholder="Укажите VIN" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EngineNumber">Номер двигателя</label>
+        <input asp-for="EngineNumber" class="form-control" placeholder="Укажите номер двигателя" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AutoNumber">Госномер</label>
+        <input asp-for="AutoNumber" class="form-control" placeholder="Укажите регистрационный номер" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="HorsePower">Мощность (л.с.)</label>
+        <input asp-for="HorsePower" class="form-control" placeholder="Укажите мощность" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="BodyNumber">Кузовной номер</label>
+        <input asp-for="BodyNumber" class="form-control" placeholder="Укажите номер кузова" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Color">Цвет</label>
+        <input asp-for="Color" class="form-control" placeholder="Укажите цвет" />
+    </div>
+
+    <div class="form-group">
         <label>
             <input asp-for="IsAvailable" type="checkbox" />
             Доступен для аренды
         </label>
     </div>
 
-    <!-- Latitude и Longitude будут задаваться автоматически в JS -->
+    <!-- Координаты задаются автоматически -->
     <input type="hidden" asp-for="Latitude" />
     <input type="hidden" asp-for="Longitude" />
 

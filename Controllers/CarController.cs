@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using RentAutoWeb.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace RentAutoWeb.Controllers
@@ -59,6 +60,117 @@ namespace RentAutoWeb.Controllers
             }).ToList();
 
             return Json(cars);
+        }
+
+        [Authorize(Roles = "Admin,Manager")]
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var car = await _context.Cars
+                .Include(c => c.MaintenanceRecords) // Загружаем историю ТО
+                .FirstOrDefaultAsync(c => c.Id == id);
+                
+            if (car == null)
+                return NotFound();
+
+            var viewModel = new CarEditViewModel
+            {
+                Car = car,
+                NewMaintenanceRecord = new MaintenanceRecord { CarId = id }
+            };
+
+            bool isAjax = Request.Headers["X-Requested-With"] == "XMLHttpRequest";
+            if (isAjax)
+                return PartialView("Edit", viewModel);
+
+            return View(viewModel);
+        }
+
+        [Authorize(Roles = "Admin,Manager")]
+        [HttpPost]
+        public async Task<IActionResult> Edit([FromForm] CarEditViewModel model)
+        {
+            bool isAjax = Request.Headers["X-Requested-With"] == "XMLHttpRequest";
+            
+            // Исключаем поля, которые не нужны для валидации
+            ModelState.Remove("Car.MaintenanceRecords");
+            
+            if (!ModelState.IsValid)
+            {
+                foreach (var error in ModelState)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Key: {error.Key}, Errors: {string.Join(", ", error.Value.Errors.Select(e => e.ErrorMessage))}");
+                }
+                
+                if (isAjax)
+                    return Json(new { success = false, errors = ModelState });
+
+                return View("Edit", model);
+            }
+
+            try
+            {
+                var carFromDb = await _context.Cars.FindAsync(model.Car.Id);
+                if (carFromDb == null)
+                {
+                    if (isAjax)
+                        return Json(new { success = false, message = "Автомобиль не найден" });
+                    return NotFound();
+                }
+
+                // Обновляем поля автомобиля
+                carFromDb.Brand = model.Car.Brand;
+                carFromDb.Model = model.Car.Model;
+                carFromDb.Year = model.Car.Year;
+                carFromDb.Price = model.Car.Price;
+                carFromDb.Description = model.Car.Description;
+                carFromDb.ImageUrl = model.Car.ImageUrl;
+                carFromDb.TransmissionType = model.Car.TransmissionType;
+                carFromDb.FuelType = model.Car.FuelType;
+                carFromDb.Category = model.Car.Category;
+                carFromDb.IsAvailable = model.Car.IsAvailable;
+                carFromDb.AutoNumber = model.Car.AutoNumber;
+                carFromDb.VinNumber = model.Car.VinNumber;
+                carFromDb.EngineNumber = model.Car.EngineNumber;
+                carFromDb.HorsePower = model.Car.HorsePower;
+                carFromDb.BodyNumber = model.Car.BodyNumber;
+                carFromDb.Color = model.Car.Color;
+                
+                if (model.Car.Latitude != 0) carFromDb.Latitude = model.Car.Latitude;
+                if (model.Car.Longitude != 0) carFromDb.Longitude = model.Car.Longitude;
+
+                
+                if (model.NewMaintenanceRecord?.MaintenanceDate != null && 
+                    !string.IsNullOrEmpty(model.NewMaintenanceRecord?.Description))
+                {
+                    var newMaintenanceRecord = new MaintenanceRecord
+                    {
+                        CarId = model.Car.Id,
+                        MaintenanceDate = model.NewMaintenanceRecord.MaintenanceDate,
+                        Description = model.NewMaintenanceRecord.Description,
+                        CreatedAt = DateTime.Now 
+                    };
+                    
+                    _context.MaintenanceRecords.Add(newMaintenanceRecord);
+                }
+
+                await _context.SaveChangesAsync();
+
+                if (isAjax)
+                    return Json(new { success = true, message = "🚗 Автомобиль успешно обновлен!" });
+
+                return RedirectToAction("Auto", "Home");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка сохранения: {ex.Message}");
+                
+                if (isAjax)
+                    return Json(new { success = false, message = "❌ Ошибка при сохранении данных" });
+                
+                ModelState.AddModelError("", "Ошибка при сохранении данных");
+                return View("Edit", model);
+            }
         }
 
 
