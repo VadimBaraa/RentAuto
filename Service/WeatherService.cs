@@ -16,7 +16,7 @@ namespace RentAutoWeb.Services
         public async Task<OpenWeatherResponse?> GetCurrentWeatherAsync(double lat, double lon)
         {
             string apiKey = _config["OpenWeatherMap:ApiKey"];
-            string url = $"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={apiKey}&units=metric";
+            string url = $"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={apiKey}&lang=ru&units=metric";
 
             var response = await _httpClient.GetAsync(url);
             if (!response.IsSuccessStatusCode) return null;

@@ -76,7 +76,8 @@ namespace RentAutoWeb.Controllers
             var viewModel = new CarEditViewModel
             {
                 Car = car,
-                NewMaintenanceRecord = new MaintenanceRecord { CarId = id }
+                NewMaintenanceRecord = new MaintenanceRecord { CarId = id, MaintenanceDate = DateTime.Today }
+                
             };
 
             bool isAjax = Request.Headers["X-Requested-With"] == "XMLHttpRequest";
